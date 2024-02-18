@@ -1,0 +1,74 @@
+[help]
+  autoCorrect = 20
+
+[user]
+  name = Fadhil Yori
+  email = me@fadhilyori.my.id
+  signingkey = F346FD15636A2B63
+
+[commit]
+  gpgsign = true
+
+[includeIf "gitdir:~/Projects/Trustmedis/"]
+  path = ~/Projects/Trustmedis/.gitconfig
+
+[core]
+  pager = diff-so-fancy | less --tabs=4 -RFX
+  longpaths = true
+  autocrlf = false
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+
+[init]
+  defaultBranch = main
+
+[color]
+  ui = true
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  func = 146 bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[alias]
+  a = add .
+  b = checkout -b # git checkout -b new_branch
+  bl = branch -a # list all branches
+  c = commit -am # commit add message
+  cl = clone
+  co = checkout
+  d = diff
+  db = branch -D # delete branch
+  f = fetch
+  i = init
+  # https://egghead.io/lessons/git-make-my-git-log-look-pretty-and-readable
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches
+  o = open # see: https://github.com/paulirish/git-open
+  p = pull
+  prune = remote prune origin
+  pt = push --tags
+  ra = rebase --abort # use if you have trouble with merge conflict
+  rc = rebase --continue # use after resolving conficts
+  rs = rebase --skip # nothing to resolve move along
+  rv = remote -v # verify remote url
+  s = status
+  sc = clone --depth 20 # shallow clone
+  t = tag -l # list tags
+  ta = tag -a # add tag
