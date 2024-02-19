@@ -1,6 +1,18 @@
 # change default commands
 alias cd='z'
 alias cat='bat'
+alias e=exit
+
+# check and upgrade
+alias cnu='sudo zypper ref && sudo zypper dup --allow-vendor-change'
+
+# flatpak
+alias flu='sudo flatpak update'
+
+# snap
+alias snu='sudo snap refresh'
+
+alias cnua='printf "==> zypper\n\n" && cnu && printf "\n==> flatpak\n\n" && flu && printf "\n==> snap\n\n" && snu'
 
 # list
 alias ld='eza --icons=auto --group --octal-permissions -lD'
@@ -14,7 +26,7 @@ alias lt='eza --icons=auto --group --octal-permissions -al'
 alias rmrf='rm -rf '
 
 # tree
-alias tdl="tree -a -I 'node_modules|.svelte-kit|.git' --dirsfirst"
+alias tdl='tree -a -I "node_modules|.svelte-kit|.git" --dirsfirst'
 
 # direnv
 alias di='echo dotenv > .envrc && touch .env && direnv allow'
@@ -23,9 +35,6 @@ alias di='echo dotenv > .envrc && touch .env && direnv allow'
 alias r='cd /home/fadhilyori/Projects'
 alias rt='cd /home/fadhilyori/Projects/Trustmedis'
 
-# navigation
-alias c='code .'
-alias e=exit
 #alias ls='ls -lart'
 
 # git commands
