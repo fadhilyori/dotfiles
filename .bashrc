@@ -10,7 +10,7 @@ export BASH_IT="/home/fadhilyori/.bash_it"
 # Lock and Load a custom theme file.
 # Leave empty to disable theming.
 # location /.bash_it/themes/
-export BASH_IT_THEME='barbuk'
+export BASH_IT_THEME="barbuk"
 
 # Theme configuration
 BARBUK_PROMPT="git-uptream-remote-logo ssh path scm python_venv ruby terraform cloud duration exit"
