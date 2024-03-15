@@ -1,5 +1,5 @@
 # change default commands
-alias cd='z'
+# alias cd='z'
 alias cat='bat'
 alias e=exit
 
