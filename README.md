@@ -16,6 +16,7 @@ Tools will be installed and configured:
 - [Eza](https://github.com/eza-community/eza)
 - [Bat](https://github.com/sharkdp/bat)
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
+- [nanorc](https://github.com/scopatz/nanorc/)
 
 # Supported Operating Systems
 - Ubuntu
