@@ -12,7 +12,7 @@ alias flu='sudo flatpak update'
 # snap
 alias snu='sudo snap refresh'
 
-alias cnua='printf "==> zypper\n\n" && cnu && printf "\n==> flatpak\n\n" && flu && printf "\n==> snap\n\n" && snu'
+alias cnua='~/bin/upgrade-all.sh'
 
 # list
 alias ld='eza --icons=auto --group --octal-permissions -lD'
