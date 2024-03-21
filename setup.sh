@@ -19,7 +19,7 @@ if [ "$EUID" -eq 0 ] && [ "$1" != "--force" ]; then
 fi
 
 # Install dependencies for different Linux distributions if they are not installed
-# Package to install: stow nano git curl unzip zip htop
+# Package to install: stow nano git curl wget unzip zip htop zoxide bat eza diff-so-fancy
 
 # Check if git is installed
 if ! command -v git >/dev/null; then
@@ -77,6 +77,20 @@ if ! command -v curl >/dev/null; then
     fi
 fi
 
+# Check if wget is installed
+if ! command -v wget >/dev/null; then
+    printf "=> Error: wget is not installed\n"
+    # Install wget for different Linux distributions
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "opensuse-tumbleweed" ]; then
+            sudo zypper install wget
+        elif [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            sudo apt install wget
+        fi
+    fi
+fi
+
 # Check if unzip and zip is installed
 if ! command -v unzip >/dev/null || ! command -v zip >/dev/null; then
     printf "=> Error: unzip or zip is not installed\n"
@@ -103,6 +117,50 @@ if ! command -v htop >/dev/null; then
             sudo apt install htop
         fi
     fi
+fi
+
+# Check if zoxide is installed
+if ! command -v z >/dev/null; then
+    printf "=> Error: zoxide is not installed\n"
+    # Install zoxide
+    printf "=> Installing zoxide...\n"
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    printf "=> Installing zoxide...done\n\n"
+fi
+
+# Check if bat is installed
+
+# Check if eza is installed
+if ! command -v eza >/dev/null; then
+    printf "=> Error: eza is not installed\n"
+    # Install eza
+    printf "=> Installing eza...\n"
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "opensuse-tumbleweed" ]; then
+            sudo zypper install eza
+        elif [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            sudo mkdir -p /etc/apt/keyrings
+            wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+            sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+            sudo apt update
+            sudo apt install -y eza
+        fi
+    fi
+    printf "=> Installing eza...done\n\n"
+fi
+
+# Check if diff-so-fancy is installed
+# https://github.com/so-fancy/diff-so-fancy
+# URL: https://github.com/so-fancy/diff-so-fancy/releases/download/v1.4.4/diff-so-fancy
+if ! command -v diff-so-fancy >/dev/null; then
+    printf "=> Error: diff-so-fancy is not installed\n"
+    # Install diff-so-fancy
+    printf "=> Installing diff-so-fancy...\n"
+    curl -sSL https://github.com/so-fancy/diff-so-fancy/releases/download/v1.4.4/diff-so-fancy >~/bin/diff-so-fancy
+    chmod +x ~/bin/diff-so-fancy
+    printf "=> Installing diff-so-fancy...done\n\n"
 fi
 
 # Clone this repository if it is not cloned to ~/dotfiles

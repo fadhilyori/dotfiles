@@ -9,7 +9,13 @@ Tools will be installed and configured:
 - [Bash-it](https://github.com/Bash-it/bash-it)
 - [Nano](https://www.nano-editor.org/)
 - [Htop](https://htop.dev/)
+- [Curl](https://curl.se/)
+- [Wget](https://www.gnu.org/software/wget/)
 - [Git](https://git-scm.com/)
+- [zoxide](https://github.com/ajeetdsouza/zoxide)
+- [Eza](https://github.com/eza-community/eza)
+- [Bat](https://github.com/sharkdp/bat)
+- [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
 
 # Supported Operating Systems
 - Ubuntu
