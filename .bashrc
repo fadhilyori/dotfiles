@@ -4,6 +4,9 @@ case $- in
     *) return;;
 esac
 
+# Add Go bin directory to PATH
+export PATH="$PATH:$(go env GOPATH)/bin"
+
 # Path to the bash it configuration
 export BASH_IT="/home/fadhilyori/.bash_it"
 
