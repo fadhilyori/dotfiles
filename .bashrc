@@ -1,3 +1,17 @@
+# Sample .bashrc for SUSE Linux
+# Copyright (c) SUSE Software Solutions Germany GmbH
+
+# There are 3 different types of shells in bash: the login shell, normal shell
+# and interactive shell. Login shells read ~/.profile and interactive shells
+# read ~/.bashrc; in our setup, /etc/profile sources ~/.bashrc - thus all
+# settings made here will also take effect in a login shell.
+#
+# NOTE: It is recommended to make language settings in ~/.profile rather than
+# here, since multilingual X sessions would not work properly if LANG is over-
+# ridden in every subshell.
+
+test -s ~/.alias && . ~/.alias || true
+
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -13,14 +27,11 @@ export BASH_IT="/home/fadhilyori/.bash_it"
 # Lock and Load a custom theme file.
 # Leave empty to disable theming.
 # location /.bash_it/themes/
-export BASH_IT_THEME="barbuk"
-
-# Theme configuration
-BARBUK_PROMPT="git-uptream-remote-logo ssh path scm python_venv ruby terraform cloud duration exit"
+export BASH_IT_THEME='bobby'
 
 # Some themes can show whether `sudo` has a current token or not.
 # Set `$THEME_CHECK_SUDO` to `true` to check every prompt:
-THEME_CHECK_SUDO='true'
+#THEME_CHECK_SUDO='true'
 
 # (Advanced): Change this to the name of your remote repo if you
 # cloned bash-it with a remote other than origin such as `bash-it`.
@@ -64,8 +75,7 @@ export SCM_CHECK=true
 
 # If your theme use command duration, uncomment this to
 # enable display of last command duration.
-export BASH_IT_COMMAND_DURATION=true
-
+#export BASH_IT_COMMAND_DURATION=true
 # You can choose the minimum time in seconds before
 # command duration is displayed.
 #export COMMAND_DURATION_MIN_SECONDS=1
@@ -80,10 +90,14 @@ export BASH_IT_COMMAND_DURATION=true
 
 # (Advanced): Uncomment this to make Bash-it reload itself automatically
 # after enabling or disabling aliases, plugins, and completions.
-export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
+# export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
 
 # Uncomment this to make Bash-it create alias reload.
 # export BASH_IT_RELOAD_LEGACY=1
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
