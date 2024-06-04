@@ -12,16 +12,6 @@
 
 test -s ~/.alias && . ~/.alias || true
 
-# Check if current environment is in WSL
-if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
-    # Windows Subsystem for Linux detected.
-    # Some WSL-specific configuration.
-    # Enable extra colors in WSL terminal
-    export LS_COLORS='ow=01;36;40'
-    # Enable 24-bit color in WSL terminal
-    export TERM=xterm-24bit
-fi
-
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -111,3 +101,11 @@ source "$BASH_IT"/bash_it.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/home/fadhilyori/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
