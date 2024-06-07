@@ -72,8 +72,3 @@
   sc = clone --depth 20 # shallow clone
   t = tag -l # list tags
   ta = tag -a # add tag
-
-[gpg]
-  program = /mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe
-[safe]
-	directory = %(prefix)///wsl.localhost/openSUSE-Tumbleweed/home/fadhilyori/Projects/Kuliah/sensor-parser
