@@ -15,7 +15,7 @@ fi
 
 printf "=> Checking for updates to dotfiles...\n"
 # Show the output of the git pull command if verbose mode is enabled
-cd ~/dotfiles && git pull
+cd ~/dotfiles && git pull --rebase true || (echo "=> Error: git pull failed, check the error below" && exit 1)
 printf "=> Checking for updates to dotfiles...done\n\n"
 
 # Check for updates to bash-it
