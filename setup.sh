@@ -19,7 +19,45 @@ if [ "$EUID" -eq 0 ] && [ "$1" != "--force" ]; then
 fi
 
 # Install dependencies for different Linux distributions if they are not installed
-# Package to install: stow nano git curl wget unzip zip htop zoxide bat eza diff-so-fancy
+# Package to install: stow nano git curl wget unzip zip htop zoxide bat eza diff-so-fancy zsh oh-my-posh bash-it nanorc direnv
+
+# Check if zsh is installed
+if ! command -v zsh >/dev/null; then
+    printf "=> Error: zsh is not installed\n"
+    # Install zsh for different Linux distributions
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "opensuse-tumbleweed" ]; then
+            sudo zypper install zsh
+        elif [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            sudo apt install zsh
+        fi
+    fi
+fi
+
+# Check if direnv is installed
+if ! command -v direnv >/dev/null; then
+    printf "=> Error: direnv is not installed\n"
+    # Install direnv for different Linux distributions
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "opensuse-tumbleweed" ]; then
+            sudo zypper install direnv
+        elif [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            sudo apt install direnv
+        fi
+    fi
+fi
+
+# Check if Oh My Posh is installed
+# Install command: curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/bin
+if ! command -v oh-my-posh >/dev/null; then
+    printf "=> Error: oh-my-posh is not installed\n"
+    # Install oh-my-posh
+    printf "=> Installing oh-my-posh...\n"
+    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/bin
+    printf "=> Installing oh-my-posh...done\n\n"
+fi
 
 # Check if git is installed
 if ! command -v git >/dev/null; then
@@ -129,6 +167,18 @@ if ! command -v z >/dev/null; then
 fi
 
 # Check if bat is installed
+if ! command -v bat >/dev/null; then
+    printf "=> Error: bat is not installed\n"
+    # Install bat for different Linux distributions
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "opensuse-tumbleweed" ]; then
+            sudo zypper install bat
+        elif [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+            sudo apt install bat
+        fi
+    fi
+fi
 
 # Check if eza is installed
 if ! command -v eza >/dev/null; then
@@ -188,7 +238,7 @@ if [ ! -d ~/.nano ]; then
 fi
 
 # Make directory
-mkdir -p ~/bin ~/.config/htop ~/.bash_it/aliases ~/.ssh ~/Projects/Trustmedis
+mkdir -p ~/bin ~/.config/htop ~/.bash_it/aliases ~/.ssh ~/Projects/Trustmedis ~/.poshthemes
 
 # Run stow command
 stow . -t ~
