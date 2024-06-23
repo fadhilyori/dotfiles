@@ -2,6 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$HOME/go/bin:$PATH
 
+# Load aliases
+. ~/.zsh_aliases
+
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config ~/.poshthemes/mytheme.omp.toml)"
 fi
