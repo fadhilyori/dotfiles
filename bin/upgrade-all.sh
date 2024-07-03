@@ -6,6 +6,16 @@
 # shellcheck source=/etc/os-release
 . /etc/os-release
 
+# Check updates for oh-my-posh
+# Install command: curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/bin
+if ! command -v oh-my-posh >/dev/null; then
+  printf "=> Error: oh-my-posh is not installed\n"
+fi
+
+printf "=> Getting the latest version of oh-my-posh...\n"
+curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/bin
+printf "=> Getting the latest version of oh-my-posh...done\n\n"
+
 # Check for updates to dotfiles
 # Check if dotfiles is installed
 if [ ! -d ~/dotfiles ]; then
@@ -51,7 +61,7 @@ fi
 
 # Check for updates to flatpak
 # Only check for updates if flatpak is installed
-if command -v flatpak > /dev/null; then
+if command -v flatpak >/dev/null; then
   printf "=> Checking for updates to flatpak...\n"
   sudo flatpak update
   printf "=> Checking for updates to flatpak...done\n\n"
@@ -59,8 +69,8 @@ fi
 
 # Check for updates to snap
 # Only check for updates if snap is installed
-if command -v snap > /dev/null; then
-    printf "=> Checking for updates to snap...\n"
-    sudo snap refresh
-    printf "=> Checking for updates to snap...done\n\n"
+if command -v snap >/dev/null; then
+  printf "=> Checking for updates to snap...\n"
+  sudo snap refresh
+  printf "=> Checking for updates to snap...done\n\n"
 fi
