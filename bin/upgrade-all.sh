@@ -13,7 +13,7 @@ if ! command -v oh-my-posh >/dev/null; then
 fi
 
 printf "=> Getting the latest version of oh-my-posh...\n"
-curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/bin
+oh-my-posh upgrade
 printf "=> Getting the latest version of oh-my-posh...done\n\n"
 
 # Check for updates to dotfiles
