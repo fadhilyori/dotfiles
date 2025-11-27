@@ -183,3 +183,7 @@ alias pingg='ping -c 4 google.com'          # ping google
 alias psa='ps aux'                         # all processes
 alias psg='ps aux | grep -i'               # grep processes (takes argument)
 alias memh='free -h'                       # memory usage human readable
+
+# Dotfiles management
+alias dotfiles='cd ~/.dotfiles'            # go to dotfiles directory
+alias dotfiles-update='cd ~/.dotfiles && git pull origin main && cd -'  # update dotfiles from remote
