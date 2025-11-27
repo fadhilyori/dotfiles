@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # UV Tool Updater
 
 # Check if uv is available

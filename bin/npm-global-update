@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # NPM Global Package Updater
 
 # Check if npm is available
