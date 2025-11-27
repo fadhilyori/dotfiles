@@ -19,15 +19,18 @@ command_exists() { command -v "$1" >/dev/null 2>&1; }
 # Parse arguments
 AUTO_SETUP=false
 PACKAGES_ONLY=false
+SYMLINKS_ONLY=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         -s|--auto-setup) AUTO_SETUP=true; shift ;;
         -p|--packages-only) PACKAGES_ONLY=true; shift ;;
+        -l|--symlinks-only) SYMLINKS_ONLY=true; shift ;;
         -h|--help)
-            echo "Usage: $0 [-s] [-p] [-h]"
+            echo "Usage: $0 [-s] [-p] [-l] [-h]"
             echo "  -s  Auto-setup bash and nano configurations"
             echo "  -p  Install packages only (skip stow and dotfiles setup)"
+            echo "  -l  Symlinks only (skip package installation)"
             echo "  -h  Show this help"
             exit 0
             ;;
@@ -79,7 +82,7 @@ install_optional_tools() {
     # Install Ripgrep
     if ! command_exists rg; then
         log_info "Installing Ripgrep..."
-        sudo apt-get install -y ripgrep
+        sudo apt install -y ripgrep
     else
         log_success "Ripgrep already installed"
     fi
@@ -195,6 +198,28 @@ install_optional_tools() {
     else
         log_success "ncdu already installed"
     fi
+
+    # Install eza (enhanced ls replacement)
+    if ! command_exists eza; then
+        log_info "Installing eza..."
+        sudo apt install -y gpg
+        sudo mkdir -p /etc/apt/keyrings
+        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+        sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+        sudo apt update
+        sudo apt install -y eza
+    else
+        log_success "eza already installed"
+    fi
+
+    # Install wl-clipboard (Wayland clipboard utilities)
+    if ! command_exists wl-copy; then
+        log_info "Installing wl-clipboard..."
+        sudo apt install -y wl-clipboard
+    else
+        log_success "wl-clipboard already installed"
+    fi
 }
 
 # Install fonts
@@ -224,6 +249,22 @@ install_fonts() {
     fi
 
     log_success "Fonts installation completed"
+}
+
+# Install nano syntax highlighting
+install_nano_syntax() {
+    log_info "Installing nano syntax highlighting"
+
+    if [ -d "$HOME/.nano" ]; then
+        log_success "nano syntax highlighting already installed"
+        return 0
+    fi
+
+    if curl -s https://raw.githubusercontent.com/galenguyer/nano-syntax-highlighting/master/install.sh | bash; then
+        log_success "nano syntax highlighting installed successfully"
+    else
+        log_warning "Failed to install nano syntax highlighting"
+    fi
 }
 
 # Clone or update dotfiles
@@ -328,6 +369,20 @@ setup_symlinks() {
 
 # Main function
 main() {
+    if [ "$SYMLINKS_ONLY" = true ]; then
+        log_info "Starting symlinks-only setup"
+        setup_dotfiles
+        setup_directories
+        setup_bashrc
+        setup_nanorc
+        setup_symlinks
+
+        printf '\n%s\n' "${GREEN}Symlinks setup completed!${NC}"
+        printf "Next step: Reload shell with 'exec \$SHELL' or 'source ~/.bashrc'\n"
+        log_success "Done!"
+        return 0
+    fi
+
     if [ "$PACKAGES_ONLY" = true ]; then
         log_info "Starting packages-only installation"
     else
@@ -352,6 +407,9 @@ main() {
 
     # Install fonts
     install_fonts
+
+    # Install nano syntax highlighting
+    install_nano_syntax
 
     if [ "$PACKAGES_ONLY" = true ]; then
         printf '\n%s\n' "${GREEN}Packages installation completed!${NC}"
