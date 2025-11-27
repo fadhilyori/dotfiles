@@ -179,6 +179,22 @@ install_optional_tools() {
     else
         log_success "Kitty terminal already installed"
     fi
+
+    # Install duf (enhanced df replacement)
+    if ! command_exists duf; then
+        log_info "Installing duf..."
+        sudo apt install -y duf
+    else
+        log_success "duf already installed"
+    fi
+
+    # Install ncdu (enhanced du replacement)
+    if ! command_exists ncdu; then
+        log_info "Installing ncdu..."
+        sudo apt install -y ncdu
+    else
+        log_success "ncdu already installed"
+    fi
 }
 
 # Install fonts

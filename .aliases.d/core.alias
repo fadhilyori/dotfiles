@@ -155,8 +155,22 @@ alias config-clear='php artisan config:clear'  # Laravel config clear
 
 # System administration aliases
 # File system operations
-alias dfh='df -h'                          # disk usage human readable
-alias dush='du -sh * | sort -h'            # directory sizes
+# Enhanced df replacement (if duf is available)
+if command -v duf >/dev/null 2>&1; then
+    alias _df='/usr/bin/df'                # original df command
+    alias df='duf'                         # use duf as df
+    alias dfh='duf'                        # disk usage human readable
+else
+    alias dfh='df -h'                      # fallback to df -h
+fi
+
+# Enhanced du replacement (if ncdu is available)
+if command -v ncdu >/dev/null 2>&1; then
+    alias _du='/usr/bin/du'                # original du command
+    alias du='ncdu'                        # use ncdu as du
+fi
+
+alias dush='du -sh * | sort -h'            # directory sizes (uses original du via path)
 alias lsbig='ls -lahS | head -10'          # largest files in directory
 
 # Network diagnostics
