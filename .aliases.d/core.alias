@@ -170,7 +170,7 @@ if command -v ncdu >/dev/null 2>&1; then
     alias du='ncdu'                        # use ncdu as du
 fi
 
-alias dush='du -sh * | sort -h'            # directory sizes (uses original du via path)
+alias dush='/usr/bin/du -sh * | sort -h'  # directory sizes (uses original du)
 alias lsbig='ls -lahS | head -10'          # largest files in directory
 
 # Network diagnostics
