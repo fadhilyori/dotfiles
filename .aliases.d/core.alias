@@ -51,6 +51,11 @@ if command -v wl-paste >/dev/null 2>&1; then
 fi
 
 # Navigation aliases
+# Use zoxide for smarter directory navigation (if available)
+if command -v zoxide >/dev/null 2>&1; then
+    alias cd='z'
+    alias cdi='zi'  # interactive directory selection with fzf
+fi
 alias ..='cd ..'
 alias ...='cd ../..'
 
