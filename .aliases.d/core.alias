@@ -68,30 +68,21 @@ alias aptr='sudo apt remove -y'            # apt remove
 alias aptc='sudo apt autoremove -y && sudo apt autoclean'  # apt clean
 alias aptsh='apt show'                     # apt show
 
-# Git Flow and Enhanced Git aliases
+# Git aliases
 alias gst='git status -sb'                 # git status with branch info
-alias gs='git status -sb'                  # git status (alternative)
 alias gco='git checkout'                   # git checkout
 alias gcb='git checkout -b'                # git checkout new branch
 alias ga='git add .'                       # git add all
 alias gc='git commit -m'                   # git commit with message
 alias gp='git push'                        # git push
 alias gpl='git pull'                       # git pull
-alias gl='git pull'                        # git pull (alternative)
 alias gd='git diff'                        # git diff
 alias gds='git diff --staged'              # git diff staged
 alias gg='git log --oneline --graph --decorate'  # git log graph
 alias gln='git log --oneline --graph --decorate -10'  # git log last 10
 alias grs='git reset --soft'               # git reset soft
 alias grh='git reset --hard'               # git reset hard
-
-# Git Flow specific aliases
-alias gfs='git flow feature start'         # flow feature start
-alias gff='git flow feature finish'        # flow feature finish
-alias gfrs='git flow release start'        # flow release start
-alias gfrf='git flow release finish'       # flow release finish
-alias gfh='git flow hotfix start'          # flow hotfix start
-alias gfhf='git flow hotfix finish'        # flow hotfix finish
+alias gundo='git reset HEAD~1 --soft'      # undo last commit, keep changes
 
 # Docker management aliases
 alias dps='docker ps -a'                   # docker ps all containers
@@ -103,29 +94,78 @@ alias drmi='[ -n "$(docker images -f "dangling=true" -q)" ] && docker rmi $(dock
 alias dvol='docker volume ls'              # list volumes
 alias dnet='docker network ls'             # list networks
 alias dexec='docker exec -it'              # docker exec interactive
+alias dlog='docker logs -f'                # follow container logs
+
+# Docker Compose aliases
+alias dcup='docker compose up -d'          # docker compose up detached
+alias dcdown='docker compose down'         # docker compose down
+alias dcps='docker compose ps'             # docker compose ps
+alias dclog='docker compose logs -f'       # docker compose follow logs
 
 # Python3 development aliases
 alias py='python3'                         # python3
 alias pip='pip3'                           # pip3
 alias venv='python3 -m venv'               # create virtual environment
-alias vact='source venv/bin/activate'      # activate virtual environment
-alias vdeact='deactivate'                  # deactivate virtual environment
+
+# Activate virtual environment (searches common locations)
+vact() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "Already in virtual environment: $VIRTUAL_ENV"
+        return 0
+    fi
+
+    local venv_dirs=(".venv" "venv" ".env" "env")
+    for dir in "${venv_dirs[@]}"; do
+        if [[ -f "$dir/bin/activate" ]]; then
+            source "$dir/bin/activate"
+            echo "Activated: $dir"
+            return 0
+        fi
+    done
+
+    echo "No virtual environment found. Tried: ${venv_dirs[*]}"
+    return 1
+}
+
+# Activate specific venv by name
+vactn() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: vactn <venv_name>"
+        return 1
+    fi
+    if [[ -f "$1/bin/activate" ]]; then
+        source "$1/bin/activate"
+        echo "Activated: $1"
+    else
+        echo "Not found: $1/bin/activate"
+        return 1
+    fi
+}
+
+# Create and activate venv in one step
+mkvenv() {
+    local name="${1:-.venv}"
+    python3 -m venv "$name" && source "$name/bin/activate"
+    echo "Created and activated: $name"
+}
+
+# Deactivate (with check)
+alias vdeact='[[ -n "$VIRTUAL_ENV" ]] && deactivate || echo "No active virtual environment"'
+
+# Show current venv status
+alias vwhich='echo "${VIRTUAL_ENV:-No active virtual environment}"'
+
 alias pipup='pip install --upgrade pip'    # upgrade pip
 alias pipr='pip install -r requirements.txt'  # install from requirements
 alias pipf='pip freeze > requirements.txt' # freeze requirements
-alias pyserve='python3 -m http.server 8000' # python HTTP server
-alias pyjson='python3 -m json.tool'        # json formatter
 
-# Node.js/NPM enhanced aliases
+# Node.js/NPM aliases
 alias ni='npm install'                     # npm install
 alias nr='npm run'                         # npm run
 alias ns='npm start'                       # npm start
 alias nt='npm test'                        # npm test
 alias nls='npm list -g --depth=0'          # list global packages
 alias nout='npm outdated -g'               # outdated global packages
-alias nclean='npm cache clean --force'     # clean npm cache
-alias ninit='npm init -y'                  # quick package.json init
-alias nrun='npm run'                       # npm run
 alias nbuild='npm run build'               # npm run build
 alias ndev='npm run dev'                   # npm run dev
 
@@ -133,25 +173,18 @@ alias ndev='npm run dev'                   # npm run dev
 alias gob='go build'                       # go build
 alias gor='go run'                         # go run
 alias got='go test'                        # go test
-alias goget='go get'                       # go get
-alias gomod='go mod'                       # go mod commands
 alias gofmt='gofmt -w'                     # format go files
 alias govet='go vet'                       # go vet
-alias goinst='go install'                  # go install
-alias goclean='go clean -modcache'         # clean go cache
 
 # PHP/Laravel development aliases
-alias phpv='php -v'                        # php version
-alias phpa='php -a'                        # php interactive
-alias comp='php artisan'                   # composer/artisan shortcut
-alias art='php artisan'                    # artisan only
-alias serve='php artisan serve'            # Laravel serve
-alias migrate='php artisan migrate'        # Laravel migrate
-alias fresh='php artisan migrate:fresh'    # Laravel fresh migrate
-alias seed='php artisan db:seed'           # Laravel seed
-alias tinker='php artisan tinker'          # Laravel tinker
-alias cache-clear='php artisan cache:clear' # Laravel cache clear
-alias config-clear='php artisan config:clear'  # Laravel config clear
+alias art='php artisan'                    # artisan
+alias laserve='php artisan serve'          # Laravel serve
+alias lamigrate='php artisan migrate'      # Laravel migrate
+alias lafresh='php artisan migrate:fresh'  # Laravel fresh migrate
+alias laseed='php artisan db:seed'         # Laravel seed
+alias latinker='php artisan tinker'        # Laravel tinker
+alias lacache='php artisan cache:clear'    # Laravel cache clear
+alias laconfig='php artisan config:clear'  # Laravel config clear
 
 # System administration aliases
 # File system operations
@@ -177,7 +210,6 @@ alias lsbig='ls -lahS | head -10'          # largest files in directory
 alias myip='curl -s ipinfo.io/ip'           # external IP
 alias myipinfo='curl -s ipinfo.io'          # detailed IP info
 alias ports='netstat -tuln'                 # listening ports
-alias pingg='ping -c 4 google.com'          # ping google
 
 # Process management
 alias psa='ps aux'                         # all processes
