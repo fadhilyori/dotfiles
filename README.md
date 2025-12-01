@@ -106,7 +106,7 @@ dstop           # stop all containers
 ### Development
 ```bash
 venv myenv      # python3 -m venv myenv
-vact            # source venv/bin/activate
+vact            # source .venv/bin/activate
 ni express      # npm install express
 nr dev          # npm run dev
 gob             # go build
