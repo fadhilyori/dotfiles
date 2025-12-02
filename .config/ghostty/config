@@ -80,8 +80,6 @@ shell-integration-features = no-cursor,sudo,title,ssh-env,ssh-terminfo
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
 # Font size control
-keybind = ctrl+plus=set_font_size:+1
-keybind = ctrl+minus=set_font_size:-1
 keybind = ctrl+0=set_font_size:10
 
 # Split management (existing, enhanced)
