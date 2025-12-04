@@ -1,32 +1,7 @@
 # Cell and spacing adjustments
 adjust-cell-height = 35%
 
-# Theme: Catppuccin Mocha (custom implementation)
-# Replaces Atom theme for better contrast and modern aesthetics
-foreground = #CDD6F4
-background = #1E1E2E
-cursor-color = #F5E0DC
-cursor-text = #1E1E2E
-selection-foreground = #1E1E2E
-selection-background = #F5E0DC
-
-# Catppuccin Mocha color palette
-palette = 0=#45475A
-palette = 8=#585B70
-palette = 1=#F38BA8
-palette = 9=#F38BA8
-palette = 2=#A6E3A1
-palette = 10=#A6E3A1
-palette = 3=#F9E2AF
-palette = 11=#F9E2AF
-palette = 4=#89B4FA
-palette = 12=#89B4FA
-palette = 5=#F5C2E7
-palette = 13=#F5C2E7
-palette = 6=#94E2D5
-palette = 14=#94E2D5
-palette = 7=#BAC2DE
-palette = 15=#A6ADC8
+theme = dark:TokyoNight,light:"TokyoNight Day"
 
 # Background and window effects
 background-opacity = 0.85
@@ -47,7 +22,7 @@ window-save-state = always
 undo-timeout = 10s
 
 # Font configuration
-font-family = "JetBrains Mono"
+#font-family = "JetBrains Mono"
 font-size = 10
 font-feature = +calt
 
