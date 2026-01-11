@@ -16,7 +16,7 @@ set backup                              # Creates backups of your current file.
 set backupdir ~/.cache/nano/backups/    # The location of the backups.
 
 # Enable mouse support
-set mouse
+# set mouse
 
 # Friendly color scheme for dark and light modes
 set errorcolor bold,red,white
