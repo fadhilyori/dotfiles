@@ -2,95 +2,199 @@
 
 set -euo pipefail
 
-# NPM Global Package Updater
+# Default options
+SKIP_CONFIRM=false
+DRY_RUN=false
+QUIET=false
 
-# Check if npm is available
+# Function to show help
+show_help() {
+    cat << EOF
+NPM Global Package Updater
+
+Usage: npm-global-update [OPTIONS]
+
+Options:
+    -y                Skip confirmation and update all packages
+    --dry-run         Show what would be updated without doing it
+    --help            Show this help message
+    --quiet           Minimal output
+
+Examples:
+    npm-global-update              # Interactive mode
+    npm-global-update -y           # Update all without confirmation
+    npm-global-update --dry-run    # Preview updates
+EOF
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -y)
+            SKIP_CONFIRM=true
+            shift
+            ;;
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --quiet)
+            QUIET=true
+            shift
+            ;;
+        --help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+# Pre-flight checks
 if ! command -v npm &> /dev/null; then
-    echo "Error: npm is not installed or not in PATH" >&2
+    echo "❌ npm is not installed or not in PATH"
     exit 1
 fi
 
-echo "=== NPM Global Package Updater ==="
-echo "Checking for outdated packages..."
+if ! npm ping &> /dev/null; then
+    echo "❌ Cannot connect to npm registry. Check your internet connection."
+    exit 1
+fi
 
-# Get list of outdated packages
-outdated_text=$(npm outdated -g 2>/dev/null || true)
+[[ "$QUIET" != true ]] && echo "=== NPM Global Package Updater ==="
+[[ "$QUIET" != true ]] && echo "Checking for outdated global npm packages..."
+[[ "$QUIET" != true ]] && echo ""
 
-if [[ -z "$outdated_text" ]]; then
-    echo "No outdated packages found."
-    echo ""
-    echo "All global packages are up to date!"
+# Get outdated packages
+outdated_output=$(npm outdated -g --depth=0 2>/dev/null || true)
+
+if [ -z "$outdated_output" ]; then
+    [[ "$QUIET" != true ]] && echo "✅ All global packages are up to date!"
     exit 0
 fi
 
-# Parse package names - skip header line
-package_names=()
+# Parse outdated packages into arrays
+declare -a package_names=()
+declare -a current_versions=()
+declare -a latest_versions=()
+
+# Skip header line and parse each package
 while IFS= read -r line; do
-    # Skip header line and empty lines
-    if [[ -z "$line" ]] || [[ "$line" =~ ^Package ]]; then
-        continue
+    if [[ "$line" =~ ^[^[:space:]] ]]; then
+        # Parse package info
+        read -r pkg current wanted latest location <<< "$line"
+        package_names+=("$pkg")
+        current_versions+=("$current")
+        latest_versions+=("$latest")
     fi
+done <<< "$(echo "$outdated_output" | tail -n +2)"
 
-    # Extract first column (package name)
-    package_name=$(echo "$line" | awk '{print $1}')
+# Display outdated packages in a nice format
+[[ "$QUIET" != true ]] && echo "📦 Found ${#package_names[@]} outdated package(s):"
+if [[ "$QUIET" != true ]]; then
+    for i in "${!package_names[@]}"; do
+        printf "[%d] %-20s %s → %s\n" $((i+1)) "${package_names[i]}" "${current_versions[i]}" "${latest_versions[i]}"
+    done
+    echo ""
+fi
 
-    # Add to array if not empty
-    if [[ -n "$package_name" ]]; then
-        package_names+=("$package_name")
-    fi
-done <<< "$outdated_text"
-
-if [[ ${#package_names[@]} -eq 0 ]]; then
-    echo "No outdated packages found or unable to parse package list."
+if [[ "$DRY_RUN" == true ]]; then
+    echo "🔍 Dry run mode - no packages will be updated"
+    echo "Would update: ${package_names[*]}"
     exit 0
 fi
 
-echo "Found ${#package_names[@]} outdated package(s)"
-echo ""
+# Handle confirmation
+if [[ "$SKIP_CONFIRM" == false ]]; then
+    echo "Update options:"
+    echo "  [a] All packages"
+    echo "  [s] Select specific packages"
+    echo "  [c] Cancel"
+    echo ""
+    read -p "Choice (a/s/c): " -n 1 -r choice
+    echo ""
 
-# Display packages
-echo "Packages to update:"
-for i in "${!package_names[@]}"; do
-    printf "  %d. %s\n" $((i+1)) "${package_names[i]}"
-done
-echo ""
+    case $choice in
+        [Aa])
+            # Update all packages
+            packages_to_update=("${package_names[@]}")
+            ;;
+        [Ss])
+            # Select specific packages
+            echo "Enter package numbers (e.g., 1,3,5) or package names:"
+            read -r selection
 
-# Update all packages
-updated=0
-failed=0
-total=${#package_names[@]}
+            declare -a packages_to_update=()
+            IFS=',' read -ra selections <<< "$selection"
 
-echo "Starting package updates..."
-echo ""
+            for sel in "${selections[@]}"; do
+                sel=$(echo "$sel" | xargs)  # trim whitespace
+                if [[ "$sel" =~ ^[0-9]+$ ]]; then
+                    # It's a number
+                    idx=$((sel-1))
+                    if [[ $idx -ge 0 && $idx -lt ${#package_names[@]} ]]; then
+                        packages_to_update+=("${package_names[$idx]}")
+                    fi
+                else
+                    # It's a package name
+                    packages_to_update+=("$sel")
+                fi
+            done
 
-# Process each package
-for package in "${package_names[@]}"; do
-    printf "Updating %s... " "$package"
+            if [[ ${#packages_to_update[@]} -eq 0 ]]; then
+                echo "❌ No valid packages selected"
+                exit 1
+            fi
+            ;;
+        [Cc]|*)
+            echo "❌ Update cancelled"
+            exit 0
+            ;;
+    esac
+else
+    # Skip confirmation mode - update all
+    packages_to_update=("${package_names[@]}")
+fi
 
-    # Run npm update and check exit code
-    npm update -g "$package" >/dev/null 2>&1
-    exit_code=$?
+# Perform updates
+[[ "$QUIET" != true ]] && echo "🔄 Updating ${#packages_to_update[@]} package(s)..."
 
-    if [[ $exit_code -eq 0 ]]; then
-        printf "✓ Updated\n"
-        ((updated++))
+declare -a updated_packages=()
+declare -a failed_packages=()
+
+for package in "${packages_to_update[@]}"; do
+    [[ "$QUIET" != true ]] && echo "  Updating $package..."
+    if npm install -g "$package@latest" &> /dev/null; then
+        updated_packages+=("$package")
     else
-        printf "✗ Failed\n"
-        ((failed++))
+        failed_packages+=("$package")
     fi
 done
 
+# Show update summary
 echo ""
 echo "=== Update Summary ==="
-printf "Successfully updated: %d/%d packages\n" "$updated" "$total"
 
-if [[ $failed -gt 0 ]]; then
-    printf "Failed to update: %d packages\n" "$failed"
-    echo ""
-    echo "Tip: Check your internet connection and try running individual updates with 'npm update -g <package>'"
+if [[ ${#updated_packages[@]} -gt 0 ]]; then
+    echo "✅ Successfully updated ${#updated_packages[@]} package(s):"
+    for package in "${updated_packages[@]}"; do
+        # Find the old and new versions for summary
+        for i in "${!package_names[@]}"; do
+            if [[ "${package_names[i]}" == "$package" ]]; then
+                echo "  $package: ${current_versions[i]} → ${latest_versions[i]}"
+                break
+            fi
+        done
+    done
 fi
 
-if [[ $updated -gt 0 ]]; then
-    echo ""
-    echo "✓ All packages are up to date!"
+if [[ ${#failed_packages[@]} -gt 0 ]]; then
+    echo "❌ Failed to update ${#failed_packages[@]} package(s):"
+    printf "  %s\n" "${failed_packages[@]}"
 fi
+
+[[ ${#updated_packages[@]} -gt 0 ]] && echo "" && echo "🎉 Update complete!"
