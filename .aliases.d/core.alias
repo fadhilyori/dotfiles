@@ -28,9 +28,9 @@ elif command -v batcat >/dev/null 2>&1; then
 fi
 
 # Enhanced grep replacement (if ripgrep is available)
-if command -v rg >/dev/null 2>&1; then
-    alias grep='rg --color=auto'
-fi
+#if command -v rg >/dev/null 2>&1; then
+#    alias grep='rg --color=auto'
+#fi
 
 # Enhanced htop with tree view
 alias htop='htop -t'
