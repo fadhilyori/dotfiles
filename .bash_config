@@ -57,6 +57,11 @@ if [ -d "$HOME/.dotfiles/.aliases.d" ]; then
     done
 fi
 
+# Add Composer global vendor binaries to PATH
+if [ -d "$HOME/.config/composer/vendor/bin" ]; then
+    export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+fi
+
 # Initialize starship prompt (if available)
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init bash)"
