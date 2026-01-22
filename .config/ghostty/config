@@ -1,7 +1,7 @@
 # Cell and spacing adjustments
 adjust-cell-height = 35%
 
-theme = dark:TokyoNight,light:"TokyoNight Day"
+theme = dark:"Catppuccin Frappe",light:Primary
 
 # Background and window effects
 background-opacity = 0.85
@@ -23,7 +23,7 @@ undo-timeout = 10s
 
 # Font configuration
 #font-family = "JetBrains Mono"
-font-size = 10
+font-size = 13
 font-feature = +calt
 
 # Link and mouse settings
