@@ -4,6 +4,14 @@
 # Custom PATH additions
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# Dotfiles directory (for portability)
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
+# Safety aliases - require confirmation for destructive commands
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 # Node.js options
 export NODE_OPTIONS="--max-old-space-size=4096"
 
@@ -50,8 +58,8 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 # Load all aliases immediately (simple and reliable)
-if [ -d "$HOME/.dotfiles/.aliases.d" ]; then
-    for f in "$HOME/.dotfiles/.aliases.d"/*.alias; do
+if [ -d "$DOTFILES_DIR/.aliases.d" ]; then
+    for f in "$DOTFILES_DIR/.aliases.d"/*.alias; do
         # shellcheck source=*
         [ -f "$f" ] && . "$f"
     done
