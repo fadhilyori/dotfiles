@@ -1,29 +1,29 @@
 # Cell and spacing adjustments
 adjust-cell-height = 35%
 
-theme = dark:"Catppuccin Frappe",light:Primary
+theme = dark:"Broadcast",light:"Horizon Bright"
 
 # Background and window effects
-background-opacity = 0.85
-background-blur = true
+background-opacity = 0.8
+background-blur = 90
 
 # Quick terminal configuration
 quick-terminal-position = top
 quick-terminal-size = 30%,80%
 
 # Window configuration
-window-height = 24
+window-height = 30
 window-width = 120
 window-decoration = client
 window-padding-balance = true
 window-padding-x = 5
-window-padding-y = 0
+window-padding-y = 5
 window-save-state = always
 undo-timeout = 10s
 
 # Font configuration
-#font-family = "JetBrains Mono"
-font-size = 13
+font-family = "SauceCodePro Nerd Font"
+font-size = 12
 font-feature = +calt
 
 # Link and mouse settings
