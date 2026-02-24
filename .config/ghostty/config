@@ -44,7 +44,7 @@ right-click-action = copy
 bell-features = no-system,no-audio,attention,title
 
 # Shell integration with SSH improvements
-shell-integration-features = no-cursor,sudo,title,ssh-env,ssh-terminfo
+shell-integration-features = no-cursor,sudo,title,ssh-terminfo,ssh-env
 
 # Command Palette (Ghostty 1.2.0)
 # Available via ctrl+shift+p on GTK by default
