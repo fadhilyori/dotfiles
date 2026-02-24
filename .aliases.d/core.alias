@@ -72,7 +72,7 @@ alias aptsh='apt show'                     # apt show
 alias gst='git status -sb'                 # git status with branch info
 alias gco='git checkout'                   # git checkout
 alias gcb='git checkout -b'                # git checkout new branch
-alias ga='git add .'                       # git add all
+alias ga='git add -A'                       # git add all (tracked + untracked)
 alias gc='git commit -m'                   # git commit with message
 alias gp='git push'                        # git push
 alias gpl='git pull'                       # git pull
@@ -193,6 +193,7 @@ if command -v duf >/dev/null 2>&1; then
     alias _df='/usr/bin/df'                # original df command
     alias df='duf'                         # use duf as df
     alias dfh='duf'                        # disk usage human readable
+    alias dfl='duf -only local'            # local filesystems only
 else
     alias dfh='df -h'                      # fallback to df -h
 fi
