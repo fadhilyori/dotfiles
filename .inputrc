@@ -1,0 +1,19 @@
+# Readline configuration for better shell UX
+
+# Enable case-insensitive tab completion
+set completion-ignore-case on
+
+# Show all completions on first tab (instead of beep)
+set show-all-if-unmodified on
+
+# Colored completion suggestions
+set colored-stats on
+
+# Mark completions with symbols indicating file types
+set visible-stats on
+
+# Don't beep on ambiguous completions
+set bell-style visible
+
+# Enable menu completion (use arrow keys to navigate)
+set menu-complete-display-prefix on
