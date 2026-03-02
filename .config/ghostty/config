@@ -1,7 +1,8 @@
 # Cell and spacing adjustments
 adjust-cell-height = 35%
 
-theme = dark:"Broadcast",light:"Horizon Bright"
+#theme = dark:"Broadcast",light:"Horizon Bright"
+theme = "Everforest Dark Hard"
 
 # Background and window effects
 background-opacity = 0.8
