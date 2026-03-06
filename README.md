@@ -15,8 +15,8 @@ curl -sSL https://raw.githubusercontent.com/fadhilyori/.dotfiles/main/setup.sh |
 ## Features
 
 ### Core Tools
-- **Modern replacements**: eza → ls, bat → cat, rg → grep (with fallbacks)
-- **Git Flow integration**: Complete workflow aliases
+- **Modern replacements**: eza -> ls, bat -> cat, plus ripgrep/fd/fzf tooling
+- **Git workflow helpers**: Short aliases for status, diff, logs, staging, and branch work
 - **Package management**: Smart apt aliases (apti, aptu, aptdu)
 - **FZF integration**: Enhanced fuzzy completion
 
@@ -25,7 +25,7 @@ curl -sSL https://raw.githubusercontent.com/fadhilyori/.dotfiles/main/setup.sh |
 - **Node.js**: Enhanced npm commands (ni, nr, ns, nt)
 - **Python**: Virtual environment helpers (venv, vact, vdeact)
 - **Go**: Development workflow aliases (gob, gor, got)
-- **PHP/Laravel**: Artisan shortcuts (art, serve, migrate)
+- **PHP/Laravel**: Artisan shortcuts (art, laserve, lamigrate)
 
 ### System Administration
 - **File operations**: Quick disk usage and file management
@@ -82,11 +82,12 @@ exec $SHELL         # Start a new shell session
 
 ### Git Workflow
 ```bash
-gs              # git status
-ga              # git add .
+gst             # git status -sb
+ga              # git add -A
 gc "commit"     # git commit -m
 gp              # git push
-gfs feature     # git flow feature start
+gds             # git diff --staged
+git flow feature start my-feature
 ```
 
 ### Package Management
@@ -111,20 +112,56 @@ ni express      # npm install express
 nr dev          # npm run dev
 gob             # go build
 art serve       # php artisan serve
+laserve         # php artisan serve
 ```
 
 ## Architecture
 
 ```
 ~/.dotfiles/
+├── setup.sh              # Main setup/bootstrap script
 ├── .bash_config          # Main config (sourced)
 ├── .aliases.d/core.alias # All aliases (sourced)
 ├── .config/              # App configs (symlinked)
 ├── bin/                  # Utility scripts (symlinked)
-└── .gitconfig           # Git config (symlinked)
+├── .gitconfig            # Git config (symlinked)
+└── AGENTS.md             # Repo guidance for coding agents
 ```
 
 **Configuration Loading**: `.bashrc` → `.bash_config` → `.aliases.d/core.alias`
+
+## Validation
+
+There is no formal automated test suite in this repository. Use focused validation commands based on the files you changed.
+
+### Shell Files
+```bash
+bash -n setup.sh
+bash -n bin/npm-global-update
+shellcheck .bash_config .aliases.d/core.alias bin/* setup.sh
+```
+
+### Setup Script Paths
+```bash
+bash ./setup.sh -h
+bash ./setup.sh -s
+bash ./setup.sh -p
+bash ./setup.sh -l
+```
+
+### Config Validation
+```bash
+bash -lc 'source ./.bash_config'
+prettier -c .prettierrc
+```
+
+### Single-Test Guidance
+```bash
+bash -n setup.sh                 # narrow check for the main installer
+bash -n bin/uv-tool-update       # narrow check for one helper script
+shellcheck .bash_config          # single-file lint for sourced Bash config
+prettier -c .prettierrc          # single-file format check for JSON/JSONC config
+```
 
 ## Troubleshooting
 
