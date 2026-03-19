@@ -2,7 +2,7 @@
 adjust-cell-height = 35%
 
 #theme = dark:"Broadcast",light:"Horizon Bright"
-theme = "Everforest Dark Hard"
+theme = "Catppuccin Mocha"
 
 # Background and window effects
 background-opacity = 0.8
@@ -31,7 +31,7 @@ font-feature = +calt
 link-url = true
 link-previews = true
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 2
+mouse-scroll-multiplier = 1
 
 # Cursor configuration
 cursor-style = underline

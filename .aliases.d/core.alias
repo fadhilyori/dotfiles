@@ -97,6 +97,7 @@ alias dexec='docker exec -it'              # docker exec interactive
 alias dlog='docker logs -f'                # follow container logs
 
 # Docker Compose aliases
+alias doco='docker compose'                  # docker compose
 alias dcup='docker compose up -d'          # docker compose up detached
 alias dcdown='docker compose down'         # docker compose down
 alias dcps='docker compose ps'             # docker compose ps
