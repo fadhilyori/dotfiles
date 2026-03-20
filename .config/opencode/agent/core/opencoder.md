@@ -20,7 +20,7 @@ permission:
     "**/__pycache__/**": "deny"
     "**/*.pyc": "deny"
     ".git/**": "deny"
-model: minimax-coding-plan/MiniMax-M2.7
+model: opencode-go/minimax-m2.7
 ---
 
 # Development Agent

@@ -18,7 +18,7 @@ permission:
     contextscout: "allow"
     externalscout: "allow"
     TestEngineer: "allow"
-model: minimax-coding-plan/MiniMax-M2.7
+model: opencode-go/minimax-m2.7
 ---
 
 # CoderAgent

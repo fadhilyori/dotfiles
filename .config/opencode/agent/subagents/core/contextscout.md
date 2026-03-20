@@ -17,7 +17,7 @@ permission:
     "*": "deny"
   task:
     "*": "deny"
-model: minimax-coding-plan/MiniMax-M2.7
+model: opencode-go/minimax-m2.7
 ---
 
 # ContextScout

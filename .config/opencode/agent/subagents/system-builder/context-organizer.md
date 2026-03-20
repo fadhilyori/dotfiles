@@ -11,7 +11,7 @@ permission:
     "**/*.env*": "deny"
     "**/*.key": "deny"
     "**/*.secret": "deny"
-model: minimax-coding-plan/MiniMax-M2.7
+model: opencode-go/minimax-m2.7
 ---
 
 # Context Organizer

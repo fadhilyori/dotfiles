@@ -22,7 +22,7 @@ permission:
   skill:
     "*": "deny"
     "task-management": "allow"
-model: minimax-coding-plan/MiniMax-M2.7
+model: opencode-go/minimax-m2.7
 ---
 
 <context>
