@@ -1,8 +1,8 @@
 {
+  "$schema": "https://opencode.ai/config.json",
   "plugin": [
 //    "oh-my-opencode@latest"
   ],
-  "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
   "share": "disabled",
   "model": "opencode-go/minimax-m2.7",
