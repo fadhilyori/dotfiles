@@ -12,7 +12,7 @@
   "mcp": {
     "MiniMax": {
       "type": "local",
-      "enabled": true,
+      "enabled": false,
       "command": [
         "uvx",
         "minimax-coding-plan-mcp",
