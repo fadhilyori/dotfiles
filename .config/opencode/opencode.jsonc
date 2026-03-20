@@ -1,0 +1,37 @@
+{
+  "plugin": [
+//    "oh-my-opencode@latest"
+  ],
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "share": "disabled",
+  "model": "minimax-coding-plan/MiniMax-M2.7",
+  "disabled_providers": [],
+  "permission": {},
+  "provider": {},
+  "mcp": {
+    "MiniMax": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "uvx",
+        "minimax-coding-plan-mcp",
+        "-y"
+      ],
+      "environment": {
+        "MINIMAX_API_KEY": "{env:MINIMAX_API_KEY}",
+        "MINIMAX_API_HOST": "https://api.minimax.io"
+      }
+    },
+    "context7": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.context7.com/mcp/oauth"
+    },
+    "gh_grep": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.grep.app"
+    }
+  }
+}
