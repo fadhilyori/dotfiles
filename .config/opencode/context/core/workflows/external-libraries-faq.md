@@ -150,11 +150,11 @@ Before implementing with external libraries:
 
 ## Supported Libraries
 
-**See**: `.opencode/skills/context7/library-registry.md`
+**Context7 MCP** supports 50+ popular libraries. Use `context7_resolve-library-id` to find library IDs.
 
 **Categories:** Database/ORM | Auth | Frontend | Infrastructure | UI | State | Validation | Testing
 
-Not listed? ExternalScout can still fetch from official docs.
+Not listed? ExternalScout can still fetch from official docs via webfetch.
 
 ---
 
