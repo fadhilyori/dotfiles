@@ -55,119 +55,36 @@ install_packages() {
 install_optional_tools() {
     log_info "Installing optional development tools"
 
-    # Install starship
-    if ! command_exists starship; then
-        log_info "Installing Starship..."
-        sudo apt install -y starship
-    else
-        log_success "Starship already installed"
-    fi
+    declare -A tools=(
+        ["starship"]="starship"
+        ["fzf"]="fzf"
+        ["batcat"]="bat"
+        ["rg"]="ripgrep"
+        ["delta"]="git-delta"
+        ["tree"]="tree"
+        ["dig"]="dnsutils"
+        ["ffmpeg"]="ffmpeg"
+        ["7z"]="p7zip-full"
+        ["jq"]="jq"
+        ["pdftotext"]="poppler-utils"
+        ["fd"]="fd-find"
+        ["zoxide"]="zoxide"
+        ["convert"]="imagemagick"
+        ["kitty"]="kitty"
+        ["duf"]="duf"
+        ["ncdu"]="ncdu"
+        ["wl-copy"]="wl-clipboard"
+    )
 
-    # Install FZF
-    if ! command_exists fzf; then
-        log_info "Installing FZF..."
-        sudo apt install -y fzf
-    else
-        log_success "FZF already installed"
-    fi
+    for cmd in "${!tools[@]}"; do
+        if ! command_exists "$cmd"; then
+            log_info "Installing ${tools[$cmd]}..."
+            sudo apt install -y "${tools[$cmd]}"
+        else
+            log_success "${tools[$cmd]} already installed"
+        fi
+    done
 
-    # Install Bat
-    if ! command_exists batcat; then
-        log_info "Installing Bat..."
-        sudo apt install -y bat
-    else
-        log_success "Bat already installed"
-    fi
-
-    # Install Ripgrep
-    if ! command_exists rg; then
-        log_info "Installing Ripgrep..."
-        sudo apt install -y ripgrep
-    else
-        log_success "Ripgrep already installed"
-    fi
-
-    # Install git delta
-    if ! command_exists delta; then
-        log_info "Installing git delta..."
-        sudo apt install -y git-delta
-    else
-        log_success "git delta already installed"
-    fi
-
-    # Install tree
-    if ! command_exists tree; then
-        log_info "Installing tree..."
-        sudo apt install -y tree
-    else
-        log_success "tree already installed"
-    fi
-
-    # Install dnsutils (for dig command)
-    if ! command_exists dig; then
-        log_info "Installing dnsutils..."
-        sudo apt install -y dnsutils
-    else
-        log_success "dnsutils already installed"
-    fi
-
-    # Install FFmpeg
-    if ! command_exists ffmpeg; then
-        log_info "Installing FFmpeg..."
-        sudo apt install -y ffmpeg
-    else
-        log_success "FFmpeg already installed"
-    fi
-
-    # Install 7zip
-    if ! command_exists 7z; then
-        log_info "Installing 7zip..."
-        sudo apt install -y p7zip-full
-    else
-        log_success "7zip already installed"
-    fi
-
-    # Install jq
-    if ! command_exists jq; then
-        log_info "Installing jq..."
-        sudo apt install -y jq
-    else
-        log_success "jq already installed"
-    fi
-
-    # Install poppler-utils
-    if ! command_exists pdftotext; then
-        log_info "Installing poppler-utils..."
-        sudo apt install -y poppler-utils
-    else
-        log_success "poppler-utils already installed"
-    fi
-
-    # Install fd-find
-    if ! command_exists fd; then
-        log_info "Installing fd-find..."
-        sudo apt install -y fd-find
-    else
-        log_success "fd-find already installed"
-    fi
-
-    # Install zoxide
-    if ! command_exists zoxide; then
-        log_info "Installing zoxide..."
-        sudo apt install -y zoxide
-    else
-        log_success "zoxide already installed"
-    fi
-
-    # Install ImageMagick
-    if ! command_exists convert; then
-        log_info "Installing ImageMagick..."
-        sudo apt install -y imagemagick
-    else
-        log_success "ImageMagick already installed"
-    fi
-
-    # Install yazi using snap
     if ! command_exists yazi; then
         log_info "Installing yazi..."
         sudo snap install yazi --classic
@@ -175,51 +92,38 @@ install_optional_tools() {
         log_success "yazi already installed"
     fi
 
-    # Install Kitty terminal
-    if ! command_exists kitty; then
-        log_info "Installing Kitty terminal..."
-        sudo apt install -y kitty
-    else
-        log_success "Kitty terminal already installed"
-    fi
-
-    # Install duf (enhanced df replacement)
-    if ! command_exists duf; then
-        log_info "Installing duf..."
-        sudo apt install -y duf
-    else
-        log_success "duf already installed"
-    fi
-
-    # Install ncdu (enhanced du replacement)
-    if ! command_exists ncdu; then
-        log_info "Installing ncdu..."
-        sudo apt install -y ncdu
-    else
-        log_success "ncdu already installed"
-    fi
-
-    # Install eza (enhanced ls replacement)
     if ! command_exists eza; then
-        log_info "Installing eza..."
-        sudo apt install -y gpg
-        sudo mkdir -p /etc/apt/keyrings
-        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-        sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-        sudo apt update
-        sudo apt install -y eza
+        install_eza
     else
         log_success "eza already installed"
     fi
+}
 
-    # Install wl-clipboard (Wayland clipboard utilities)
-    if ! command_exists wl-copy; then
-        log_info "Installing wl-clipboard..."
-        sudo apt install -y wl-clipboard
-    else
-        log_success "wl-clipboard already installed"
+install_eza() {
+    log_info "Installing eza..."
+    local gpg_keyring="/etc/apt/keyrings/gierens.gpg"
+    local gpg_src="https://raw.githubusercontent.com/eza-community/eza/main/deb.asc"
+
+    sudo apt install -y gpg
+    sudo mkdir -p /etc/apt/keyrings
+
+    local key_temp="$(mktemp)"
+    if ! wget -qO "$key_temp" "$gpg_src"; then
+        log_error "Failed to download eza GPG key"
+        rm -f "$key_temp"
+        return 1
     fi
+
+    if ! sudo gpg --dearmor -o "$gpg_keyring" "$key_temp" 2>/dev/null; then
+        log_error "Failed to process eza GPG key"
+        rm -f "$key_temp"
+        return 1
+    fi
+    rm -f "$key_temp"
+
+    echo "deb [signed-by=$gpg_keyring] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
+    sudo chmod 644 "$gpg_keyring" /etc/apt/sources.list.d/gierens.list
+    sudo apt install -y eza
 }
 
 # Install fonts
@@ -239,7 +143,6 @@ install_fonts() {
     )
 
     log_info "Installing fonts using apt..."
-    sudo apt update
     sudo apt install -y "${fonts[@]}"
 
     # Refresh font cache
@@ -400,6 +303,10 @@ main() {
 
     if [ "$need_packages" = true ] || ! command_exists stow; then
         install_packages
+    fi
+
+    if [ "$PACKAGES_ONLY" = false ]; then
+        sudo apt update -qq
     fi
 
     # Install optional development tools
