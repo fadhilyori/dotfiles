@@ -1,3 +1,8 @@
+# Safety aliases - require confirmation for destructive commands
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 # icat alias for image previewing in terminal (if kitten is available)
 if command -v kitten >/dev/null 2>&1; then
     alias icat="kitten icat"

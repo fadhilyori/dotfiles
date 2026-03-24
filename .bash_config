@@ -7,11 +7,6 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Dotfiles directory (for portability)
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
 
-# Safety aliases - require confirmation for destructive commands
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
 # Node.js options
 export NODE_OPTIONS="--max-old-space-size=4096"
 
