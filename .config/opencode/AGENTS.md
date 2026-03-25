@@ -27,6 +27,9 @@ Dispatch a subagent when **any** of the following applies:
 
 - Tasks are independent with no shared state
 - No file overlap risk between dispatched agents
+- After completion, check that each subagent's result meets expectations
+- Use a CodeReviewer subagent to review results after parallel tasks complete
+- If a task result does not meet criteria, create a fix task for the next iteration
 
 **Sequential dispatch** — any of these triggers it:
 
@@ -38,6 +41,12 @@ Dispatch a subagent when **any** of the following applies:
 - Codebase exploration, research, docs lookup
 - Security audits, performance profiling
 - Any analysis that does not write files
+
+**Approval Workflow:**
+
+- For iterative error fixes: proceed without asking for approval in each iteration
+- For significant changes or new features: request explicit user approval before executing
+- When in doubt about scope or impact: ask the user
 
 ### Subagent Prompt Requirements
 
