@@ -15,14 +15,14 @@ permission:
     "*": "deny"
 model: opencode-go/minimax-m2.7
 tools:
-  - context7_resolve-library-id
-  - context7_query-docs
-  - webfetch
-  - read
-  - write
-  - edit
-  - glob
-  - grep
+  context7_resolve-library-id: true
+  context7_query-docs: true
+  webfetch: true
+  read: true
+  write: true
+  edit: true
+  glob: true
+  grep: true
 ---
 
 

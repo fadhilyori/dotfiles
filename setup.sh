@@ -163,11 +163,13 @@ install_nano_syntax() {
         return 0
     fi
 
-    if curl -s https://raw.githubusercontent.com/galenguyer/nano-syntax-highlighting/master/install.sh | bash; then
+    local nano_syntax_install="/tmp/nano-syntax-install.sh"
+    if curl -s -o "$nano_syntax_install" https://raw.githubusercontent.com/galenguyer/nano-syntax-highlighting/master/install.sh && bash "$nano_syntax_install"; then
         log_success "nano syntax highlighting installed successfully"
     else
         log_warning "Failed to install nano syntax highlighting"
     fi
+    rm -f "$nano_syntax_install"
 }
 
 # Clone or update dotfiles
@@ -262,7 +264,7 @@ setup_symlinks() {
         return 1
     }
 
-    if stow . -t "$HOME" --no-folding 2>/dev/null; then
+    if stow . -t "$HOME" --no-folding; then
         log_success "Symlinks created successfully"
     else
         log_error "Failed to create symlinks"

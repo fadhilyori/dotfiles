@@ -93,7 +93,7 @@ alias grh='git reset --hard'               # git reset hard
 alias gundo='git reset HEAD~1 --soft'      # undo last commit, keep changes
 
 # Docker management aliases
-dstop() { local containers=$(docker ps -q); if [ -n "$containers" ]; then docker stop $containers; else echo "No running containers"; fi; }  # stop all running containers
+dstop() { local containers=$(docker ps -q); if [ -n "$containers" ]; then docker stop "$containers"; else echo "No running containers"; fi; }
 alias dps='docker ps -a'                   # docker ps all containers
 alias dimg='docker images'                 # docker images
 alias drun='docker run -it --rm'           # docker run interactive, remove on exit

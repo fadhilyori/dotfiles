@@ -85,7 +85,7 @@
   last = log -1 HEAD
   visual = !gitk
   graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  cleanup = "!git branch --merged | grep -v '\\*\\|master\\|main\\|develop' | xargs -n 1 git branch -d"
+  cleanup = "!git branch --merged | grep -v '^\\*\\|^  master\\|^  main\\|^  develop' | xargs -r git branch -d"
   flow = !git flow
 
   # Enhanced log aliases
@@ -95,7 +95,7 @@
 
   # Enhanced diff aliases
   diffstaged = diff --staged
-  diffhead = diff HEAD~
+  diffhead = diff HEAD~1
   difftool = difftool --tool=vimdiff
 
 [push]
