@@ -86,6 +86,5 @@ task(
 - [Stage 2: Theme](./design-iteration-stage-theme.md)
 - [Stage 3: Animation](./design-iteration-stage-animation.md)
 - [Stage 4: Implementation](./design-iteration-stage-implementation.md)
-- [Visual Content Generation](./design-iteration-visual-content.md)
 - [Best Practices](./design-iteration-best-practices.md)
 - [Plan Iterations](./design-iteration-plan-iterations.md)

@@ -25,7 +25,6 @@
 | `design-iteration-stage-theme.md` | Stage 2: Theme | ⭐⭐⭐ | Theme design |
 | `design-iteration-stage-animation.md` | Stage 3: Animation | ⭐⭐⭐ | Animation design |
 | `design-iteration-stage-implementation.md` | Stage 4: Implementation | ⭐⭐⭐ | Implementation |
-| `design-iteration-visual-content.md` | Visual content generation | ⭐⭐ | Image generation |
 | `design-iteration-best-practices.md` | Best practices & troubleshooting | ⭐⭐⭐ | Quality check |
 | `design-iteration-plan-iterations.md` | Plan file iterations | ⭐⭐⭐ | Managing iterations |
 
