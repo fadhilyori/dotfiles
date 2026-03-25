@@ -64,8 +64,8 @@ Done when both questions are answered.
 
 Before writing logic from scratch:
 
-1. Check `.claude/skills/` for project-level skills
-2. Check `~/.claude/skills/` for user-level skills
+1. Check `.opencode/skills/` for project-level skills
+2. Check `~/.config/opencode/skills/` for user-level skills
 3. If a matching skill exists — use it, do not reimplement
 4. If a skill partially matches — invoke it, then extend only what's missing
 5. Build from scratch only when no relevant skill exists
