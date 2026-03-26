@@ -1,28 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-//    "oh-my-opencode@latest"
-  ],
+  "plugin": [],
   "autoupdate": true,
   "share": "disabled",
-  "model": "opencode-go/minimax-m2.7",
+  "model": "opencode-go/kimi-k2.5",
   "disabled_providers": [],
   "permission": {},
   "provider": {},
   "mcp": {
-    "MiniMax": {
-      "type": "local",
-      "enabled": false,
-      "command": [
-        "uvx",
-        "minimax-coding-plan-mcp",
-        "-y"
-      ],
-      "environment": {
-        "MINIMAX_API_KEY": "{env:MINIMAX_API_KEY}",
-        "MINIMAX_API_HOST": "https://api.minimax.io"
-      }
-    },
     "context7": {
       "type": "remote",
       "enabled": true,
