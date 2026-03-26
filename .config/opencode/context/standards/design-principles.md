@@ -10,6 +10,8 @@
 | Performance-critical | KISS | Simplicity = Speed |
 | Team project | SOLID, LoD | Collaboration |
 
+---
+
 ## Principles
 
 ### SOLID
@@ -49,14 +51,7 @@
 - Follow established project conventions
 - Reduce decision fatigue
 
-## Application by Researcher
-
-Researcher recommends principles based on:
-- Project phase (new, growing, mature)
-- Codebase size and complexity
-- Team size
-- Performance requirements
-- Domain (frontend, backend, infrastructure)
+---
 
 ## Quick Reference
 
@@ -67,6 +62,8 @@ Library/Framework → SOLID, CoC
 Performance-critical → KISS
 Team collaboration → SOLID, LoD
 ```
+
+---
 
 ## Anti-Patterns to Avoid
 

@@ -8,8 +8,6 @@ description: "Refactor code for improved quality, maintainability, and performan
 
 **Arguments**: `$ARGUMENTS` (file path or pattern)
 
-**Note**: Examples in this document use JavaScript/TypeScript syntax. Adapt patterns to your language's conventions.
-
 ---
 
 ## Usage
@@ -29,7 +27,7 @@ description: "Refactor code for improved quality, maintainability, and performan
 
 ## Before You Start
 
-1. **Detect Language & Framework** - Check for config files to identify conventions
+1. **Detect Language & Framework** - Check for config files
 2. **Read Existing Patterns** - Follow codebase's current naming and style
 3. **Language-Specific Style Guides**:
    - Python: PEP 8
@@ -41,68 +39,20 @@ description: "Refactor code for improved quality, maintainability, and performan
    - Kotlin: Kotlin Coding Conventions
    - Swift: Swift API Design Guidelines
 
+---
+
 ## Refactoring Patterns
 
-### Extract Method
-When a method is too long or does multiple things:
-```typescript
-// Before
-function processOrder(order) {
-  // validate
-  // calculate
-  // save
-  // notify
-}
-
-// After
-function processOrder(order) {
-  validateOrder(order);
-  const total = calculateTotal(order);
-  saveOrder(order);
-  notifyCustomer(order);
-}
-```
-
-### Extract Variable
-When an expression is complex:
-```typescript
-// Before
-if (user.age >= 18 && user.verified && user.subscription === 'premium')
-
-// After
-const isAdultPremiumUser = user.age >= 18 && user.verified && user.subscription === 'premium';
-if (isAdultPremiumUser)
-```
-
-### Replace Conditional with Polymorphism
-When switch/if statements are complex:
-```typescript
-// Before
-function getPrice(type) {
-  switch(type) {
-    case 'premium': return 100;
-    case 'basic': return 50;
-    default: return 0;
-  }
-}
-
-// After
-class Pricing {
-  getPrice() { return 0; }
-}
-class PremiumPricing extends Pricing {
-  getPrice() { return 100; }
-}
-class BasicPricing extends Pricing {
-  getPrice() { return 50; }
-}
-```
-
-### Remove Dead Code
-- Unused functions
-- Unreachable code
-- Commented-out code
-- Unused imports
+| Pattern | When to Use |
+|---------|-------------|
+| **Extract Method** | Method too long or does multiple things |
+| **Extract Variable** | Expression is complex |
+| **Extract Class** | Class too large |
+| **Introduce Parameter Object** | Long parameter list |
+| **Pull Up Method** | Duplicated code in subclasses |
+| **Replace Conditional with Polymorphism** | Complex switch/if statements |
+| **Replace Magic Number with Constant** | Hardcoded values |
+| **Remove Dead Code** | Unused functions, unreachable code |
 
 ---
 
@@ -124,28 +74,12 @@ class BasicPricing extends Pricing {
 - Make small, incremental changes
 - Run tests after each change
 - Commit frequently
-- Document changes
 
 ### 4. Verify
 - All tests pass
 - No regression
 - Performance improved
 - Code cleaner
-
----
-
-## Code Smells to Address
-
-| Smell | Refactoring |
-|-------|-------------|
-| Long method | Extract Method |
-| Large class | Extract Class |
-| Long parameter list | Introduce Parameter Object |
-| Duplicated code | Extract Method, Pull Up |
-| Dead code | Remove |
-| Complex conditional | Replace with Polymorphism |
-| Magic numbers | Replace with Constant |
-| Inappropriate intimacy | Move Method, Hide Delegate |
 
 ---
 
@@ -156,4 +90,4 @@ class BasicPricing extends Pricing {
 3. **Run tests** after each change
 4. **Don't mix** refactoring with feature changes
 5. **Document** significant changes
-6. **Respect language conventions** - Don't force one naming style across all languages
+6. **Respect language conventions**

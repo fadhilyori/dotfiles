@@ -32,19 +32,6 @@
 ### Test Behavior, Not Implementation
 Focus on what code does, not how it does it.
 
-```
-// Test the behavior
-Test: "calculateTotal returns sum of prices"
-    // Arrange
-    items = [Item(10), Item(20), Item(30)]
-    
-    // Act
-    result = calculateTotal(items)
-    
-    // Assert
-    assert result equals 60
-```
-
 ### Keep Tests Simple
 - One logical assertion per test
 - Clear, descriptive names
@@ -62,17 +49,16 @@ Test: "calculateTotal returns sum of prices"
 ## Test Structure (AAA Pattern)
 
 Every test follows this structure:
-
 ```
 Test: "descriptive test name"
-    // ARRANGE: Set up test data and environment
+    // ARRANGE
     input = createValidInput()
     expected = createExpectedOutput()
     
-    // ACT: Execute the code under test
+    // ACT
     result = functionUnderTest(input)
     
-    // ASSERT: Verify the result
+    // ASSERT
     assert result equals expected
 ```
 
@@ -82,28 +68,13 @@ Test: "descriptive test name"
 
 ### Test These
 
-**Happy Path**:
-- Normal, expected usage
-- Typical inputs
-- Standard flows
+**Happy Path**: Normal, expected usage
 
-**Edge Cases**:
-- Empty collections
-- Null/None values
-- Boundary values (min/max)
-- Very large inputs
+**Edge Cases**: Empty collections, null values, boundary values, very large inputs
 
-**Error Cases**:
-- Invalid input formats
-- Missing required fields
-- Failure scenarios
-- Exception conditions
+**Error Cases**: Invalid input formats, missing required fields, failure scenarios
 
-**Business Logic**:
-- Core algorithms
-- Business rules
-- Calculations
-- State transitions
+**Business Logic**: Core algorithms, business rules, calculations
 
 ### Don't Test These
 
@@ -117,49 +88,24 @@ Test: "descriptive test name"
 
 ## Test Naming
 
+Good:
 ```
-// Good: Clear, descriptive, includes expectation
 Test: "calculateDiscount returns 10% off for premium users"
 Test: "validateEmail returns false for invalid format"
 Test: "createUser throws error when email exists"
+```
 
-// Bad: Vague, unclear intent
+Bad:
+```
 Test: "it works"
 Test: "test user"
-Test: "function test"
 ```
 
 ---
 
 ## Testing with Dependencies
 
-### Mock External Dependencies
-
-```
-Test: "getUser retrieves from database"
-    // Arrange
-    mockDatabase = createMock()
-    mockDatabase.when("findById").calledWith("users", 1)
-        .thenReturn(User(id: 1, name: "John"))
-    
-    service = createUserService(mockDatabase)
-    
-    // Act
-    user = service.getUser(1)
-    
-    // Assert
-    assert mockDatabase.wasCalledWith("findById", "users", 1)
-    assert user equals User(id: 1, name: "John")
-```
-
-### Test Pure Functions Directly
-
-```
-Test: "add returns sum"
-    assert add(2, 3) equals 5
-    assert add(-1, 1) equals 0
-    assert add(0, 0) equals 0
-```
+Mock external dependencies. Test pure functions directly.
 
 ---
 
@@ -177,12 +123,12 @@ Test: "add returns sum"
 ## Best Practices
 
 ✅ Test one thing per test  
-✅ Use descriptive names that explain the scenario  
-✅ Keep tests independent (no shared state)  
+✅ Use descriptive names  
+✅ Keep tests independent  
 ✅ Mock external dependencies  
 ✅ Test edge cases and errors  
 ✅ Make tests readable as documentation  
-✅ Run tests frequently during development  
+✅ Run tests frequently  
 ✅ Fix failing tests immediately
 
 ❌ Don't test implementation details  

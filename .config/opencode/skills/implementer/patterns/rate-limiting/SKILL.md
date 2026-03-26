@@ -1,22 +1,37 @@
 ---
 name: rate-limiting
-description: Limit concurrent operations and control resource usage. Trigger immediately when user mentions rate limit, throttle, batch processing, resource limit, or semaphore. Also activate when dealing with API rate limits, database connection pools, or processing large datasets.
+description: Limit concurrent operations and control resource usage. Implementer loads this skill when dealing with API rate limits or resource constraints.
 ---
 
 ## Purpose
+
 Control resource usage and prevent system overload.
 
-## Workflow
+---
+
+## When to Load
+
+Load this skill when:
+- Dealing with API rate limits
+- Managing database connection pools
+- Processing large datasets
+- Controlling resource usage
+
+---
+
+## Rate Limiting Rules
 
 ### Step 1: Determine Limiting Strategy
-Ask user or check constraints:
+
+Based on constraints:
 - **API rate limits** → Use rate limiting (token bucket)
 - **Connection pool limits** → Use concurrency limit (semaphore)
 - **Large dataset processing** → Use batch processing
 
-Default: Start with concurrency limit (most common)
+Default: Start with concurrency limit
 
 ### Step 2: Set Limits
+
 Based on:
 - External API rate limits (requests/second)
 - Database connection pool size
@@ -24,6 +39,7 @@ Based on:
 - Target throughput
 
 ### Step 3: Implement Control
+
 For **concurrency limit**:
 1. Acquire slot before operation
 2. Execute operation
@@ -32,15 +48,19 @@ For **concurrency limit**:
 
 For **batch processing**:
 1. Split items into batches (size: 10-100)
-2. Process batch sequentially or with limited parallelism
+2. Process batch with limited parallelism
 3. Collect results
 4. Continue to next batch
 
 ### Step 4: Handle Overflow
+
 When limit reached:
-- Queue requests (if queue space available)
+- Queue requests (if space available)
 - Reject with clear error (if no queue)
 - Return retry-after header/info
 
-## Output Format
+---
+
+## Output
+
 Provide the rate limiter implementation with chosen strategy.

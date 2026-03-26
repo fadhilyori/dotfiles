@@ -12,7 +12,6 @@ Design principles and patterns for user interface development.
 - **Perceptually uniform color spaces** (OKLCH, HSLuv) for better accessibility
 - **CSS Custom Properties** or variables for theming
 - **Theme variables** for light/dark modes
-- Maintain consistent color palette
 
 ### Typography
 - Use established font sources (system fonts, web fonts)
@@ -23,7 +22,6 @@ Design principles and patterns for user interface development.
 ### Spacing
 - **Grid-based system**: All spacing based on consistent unit (4px, 8px)
 - **Consistent scale**: 4, 8, 16, 24, 32, 48, 64, 96
-- Maintain vertical rhythm
 
 ---
 
@@ -42,7 +40,6 @@ Large screens: 1440px+
 - Content determines breakpoints, not devices
 - Touch targets minimum 44x44px
 - Readable font sizes at all breakpoints
-- Test on actual devices when possible
 
 ---
 
@@ -90,21 +87,18 @@ Large screens: 1440px+
 - Clear visual hierarchy
 - Consistent padding
 - Actionable elements clearly marked
-- Group related information
 
 ### Forms
 - Group related fields
 - Show validation errors inline
 - Use appropriate input types
 - Disable submit during processing
-- Clear labels and instructions
 
 ### Modals/Dialogs
 - Trap focus inside modal
 - Close on Escape key
 - Close on backdrop click (optional)
 - Return focus to trigger on close
-- Clear call-to-action
 
 ### Navigation
 - Consistent placement
@@ -126,7 +120,6 @@ Large screens: 1440px+
 - Content determines layout, not vice versa
 - Responsive to content length
 - Handles edge cases gracefully
-- Progressive enhancement
 
 ---
 
@@ -153,8 +146,7 @@ Large screens: 1440px+
 ✅ Clear visual hierarchy  
 ✅ Accessible to all users  
 ✅ Performance-conscious  
-✅ Test on real devices  
-✅ Gather user feedback
+✅ Test on real devices
 
 ❌ Don't design for yourself  
 ❌ Don't break platform conventions  

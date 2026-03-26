@@ -13,7 +13,7 @@
 | Task | Read These |
 |------|------------|
 | **Write code** | `standards/code-quality.md` |
-| **Write tests** | `standards/testing.md` + `standards/code-quality.md` |
+| **Write tests** | `standards/testing.md` |
 | **Security work** | `standards/security.md` |
 | **Write docs** | `standards/documentation.md` |
 | **Review code** | Use `skill({ name: "code-review" })` |
@@ -40,28 +40,7 @@ context/
 
 ---
 
-## Standards Detail
-
-| File | Purpose | Read When |
-|------|---------|-----------|
-| `standards/code-quality.md` | Coding patterns, naming conventions, error handling | Writing/editing code |
-| `standards/testing.md` | Test coverage, AAA pattern, mocking | Writing tests |
-| `standards/security.md` | Input validation, auth, injection prevention | Security work |
-| `standards/documentation.md` | README, API docs format | Writing docs |
-| `standards/design-principles.md` | Architecture, modularity | System design |
-
----
-
-## Reference Detail
-
-| File | Purpose | Read When |
-|------|---------|-----------|
-| `reference/ui-ux.md` | UI/UX guidelines | UI/UX work |
-| `reference/development.md` | Dev best practices | General dev |
-
----
-
-## Skills (Use `skill` tool)
+## Skills
 
 For workflows and patterns, use skills instead of reading files directly:
 
@@ -78,7 +57,7 @@ For workflows and patterns, use skills instead of reading files directly:
 
 ---
 
-## MANDATORY Context Loading
+## Mandatory Context Loading
 
 **ALL agents MUST read required standards BEFORE starting any work:**
 
@@ -93,44 +72,6 @@ For workflows and patterns, use skills instead of reading files directly:
 
 ---
 
-## For Agents: Mandatory Reading
-
-### Before Coding (NON-NEGOTIABLE)
-```
-MUST READ: ~/.config/opencode/context/standards/code-quality.md
-Then proceed with implementation.
-```
-
-### Before Writing Tests (NON-NEGOTIABLE)
-```
-MUST READ: ~/.config/opencode/context/standards/testing.md
-Then proceed with test implementation.
-```
-
-### Before Writing Docs (NON-NEGOTIABLE)
-```
-MUST READ: ~/.config/opencode/context/standards/documentation.md
-Then proceed with documentation.
-```
-
-### Before Reviewing Code (NON-NEGOTIABLE)
-```
-LOAD SKILL: skill({ name: "code-review" })
-MUST READ: ~/.config/opencode/context/standards/security.md
-Then proceed with review.
-```
-
----
-
-## Navigation Rules
-
-1. **Read this README first** - Understand what's available
-2. **Open only relevant files** - Based on task type
-3. **Follow cross-references** - Files link to each other
-4. **Lazy load** - Don't preload everything
-
----
-
 ## Key Principles
 
 1. **MANDATORY Context Loading** - Read required standards BEFORE any work
@@ -142,7 +83,7 @@ Then proceed with review.
 
 ## Language-Agnostic Approach
 
-All standards in this directory are **language-agnostic**:
+All standards are **language-agnostic**:
 - No language-specific syntax
 - Generic pseudocode examples
 - Principles apply to any stack

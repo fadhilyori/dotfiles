@@ -8,29 +8,10 @@ General software development principles applicable to any language or stack.
 
 ## Development Workflow
 
-### 1. Understand Before Coding
-- Read requirements thoroughly
-- Ask clarifying questions
-- Identify constraints and edge cases
-- Plan approach before implementing
-
-### 2. Small, Incremental Changes
-- One logical change per commit
-- Easy to review and revert
-- Clear commit messages
-- Test each increment
-
-### 3. Test-Driven Development (Optional but Recommended)
-- Write test first
-- Watch it fail
-- Implement to make it pass
-- Refactor while keeping tests green
-
-### 4. Continuous Validation
-- Run tests frequently
-- Check code quality
-- Verify no regressions
-- Validate against requirements
+- Understand requirements before coding
+- Small, incremental changes
+- Test-Driven Development (optional but recommended)
+- Continuous validation
 
 ---
 
@@ -54,7 +35,6 @@ project/
 
 ### File Organization
 ```
-// Good organization within files
 1. Imports/dependencies
 2. Constants/configuration
 3. Types/interfaces
@@ -68,49 +48,18 @@ project/
 ## Version Control
 
 ### Commit Messages
-```
-// Good
-create user authentication module
-fix null pointer in payment processing
-update documentation for API changes
-refactor database connection pooling
+Use imperative mood, descriptive:
+- `create user authentication module`
+- `fix null pointer in payment processing`
+- `update documentation for API changes`
 
-// Bad
-fix
-update
-changes
-wip
-```
+Avoid vague messages like `fix`, `update`, `wip`.
 
 ### Branching Strategy
 - Main branch is always deployable
 - Feature branches for development
 - Short-lived branches preferred
 - Code review before merge
-
----
-
-## Debugging
-
-### Systematic Approach
-1. Reproduce the issue consistently
-2. Isolate the problem area
-3. Form hypothesis about cause
-4. Test hypothesis
-5. Fix and verify
-
-### Debugging Tools
-- Use appropriate debugging tools
-- Add strategic logging
-- Check assumptions
-- Test in isolation
-
-### Common Issues
-- Off-by-one errors
-- Null/nil reference
-- Race conditions
-- Resource leaks
-- Configuration errors
 
 ---
 
@@ -164,13 +113,3 @@ wip
 ❌ **Skipping Tests** - Tests are documentation and safety net  
 ❌ **Magic Numbers/Strings** - Use named constants  
 ❌ **Tight Coupling** - Keep components independent
-
----
-
-## Golden Rules
-
-1. **Understand the problem before solving it**
-2. **Write code for humans, not computers**
-3. **Test early, test often**
-4. **Simple is better than complex**
-5. **Explicit is better than implicit**

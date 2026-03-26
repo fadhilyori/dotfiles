@@ -96,7 +96,7 @@ function calculateTotal(price, taxRate) -> number
 ```
 
 Include:
-- Purpose/purpose
+- Purpose
 - Parameter names, types, and descriptions
 - Return type and description
 - Exceptions/errors that may be thrown

@@ -4,23 +4,45 @@ description: Run the complete testing pipeline
 
 # Testing Pipeline
 
-This command runs the complete testing pipeline for the project.
+Run the complete testing pipeline for the project.
+
+---
 
 ## Usage
 
-To run the complete testing pipeline, just type:
+```bash
+/test
+```
 
-1. Run pnpm type:check
-2. Run pnpm lint
-3. Run pnpm test
-4. Report any failures
-5. Fix any failures
-6. Repeat until all tests pass
-7. Report success
+---
+
+## Pipeline Steps
+
+1. **Type Check**
+   - Run `pnpm type:check`
+   - Check for type errors
+
+2. **Lint**
+   - Run `pnpm lint`
+   - Check for linting errors
+
+3. **Test**
+   - Run `pnpm test`
+   - Execute test suite
+
+4. **Report**
+   - Report any failures
+   - Fix failures if possible
+   - Repeat until all pass
+
+5. **Success**
+   - Report success when all checks pass
+
+---
 
 ## What This Command Does
 
-1. Runs `pnpm type:check` to check for type errors
-2. Runs `pnpm lint` to check for linting errors
-3. Runs `pnpm test` to run the tests
-4. Reports any failures
+1. Validates TypeScript types
+2. Checks code style with linter
+3. Runs the test suite
+4. Reports any issues found

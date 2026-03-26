@@ -33,7 +33,6 @@ description: "Explain code, concepts, or features in clear terms"
 ### Brief (Default)
 - One paragraph summary
 - Key points only
-- For quick understanding
 
 ### Standard
 - What it does
@@ -63,7 +62,6 @@ description: "Explain code, concepts, or features in clear terms"
 ### Key Components
 - **Function1**: {description}
 - **Function2**: {description}
-- **Class1**: {description}
 
 ### How It Works
 {Step-by-step explanation}
@@ -77,11 +75,6 @@ const result = Function1(input);
 
 ### Dependencies
 - {dependency1}
-- {dependency2}
-
-### Related Files
-- {related file 1}
-- {related file 2}
 ```
 
 ### For Concepts
@@ -109,11 +102,6 @@ const result = Function1(input);
 
 ### Pitfalls
 - {common mistake 1}
-- {common mistake 2}
-
-### Further Reading
-- {resource 1}
-- {resource 2}
 ```
 
 ---
@@ -140,32 +128,6 @@ const result = Function1(input);
 
 ---
 
-## Explanation Process
-
-### 1. Identify Audience
-- What's their experience level?
-- What do they already know?
-- What do they need to understand?
-
-### 2. Determine Scope
-- Brief overview?
-- Detailed walkthrough?
-- Deep dive?
-
-### 3. Structure Explanation
-- Start with high-level summary
-- Break down into components
-- Use examples
-- Address common questions
-
-### 4. Verify Understanding
-- Check for jargon
-- Ensure clarity
-- Provide examples
-- Suggest further reading
-
----
-
 ## Best Practices
 
 1. **Start simple** - High-level first, details later
@@ -173,4 +135,3 @@ const result = Function1(input);
 3. **Define terms** - Don't assume knowledge
 4. **Show context** - Where does this fit?
 5. **Address "why"** - Explain motivation
-6. **Provide references** - Link to documentation

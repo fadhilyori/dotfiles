@@ -28,14 +28,12 @@ description: "Debug code with systematic analysis and problem-solving"
 ## Debugging Process
 
 ### 1. Understand the Problem
-
 - What is the expected behavior?
 - What is the actual behavior?
 - When does it occur?
 - Is it reproducible?
 
 ### 2. Gather Information
-
 ```bash
 # Check error logs
 cat logs/error.log | grep -A5 "error"
@@ -48,20 +46,15 @@ grep -r "function_name" src/
 ```
 
 ### 3. Form Hypothesis
-
-Based on evidence, form a hypothesis:
-- "The error occurs because X is undefined when Y happens"
-- "The race condition happens when Z and W execute concurrently"
+Based on evidence, form specific hypotheses about root cause.
 
 ### 4. Test Hypothesis
-
 - Add logging/debugging statements
 - Use debugger breakpoints
 - Isolate the problematic code
 - Test with different inputs
 
 ### 5. Fix and Verify
-
 - Implement fix
 - Add test case
 - Verify fix works
@@ -71,75 +64,12 @@ Based on evidence, form a hypothesis:
 
 ## Common Bug Patterns
 
-### Null/Undefined Errors
-```typescript
-// Problem
-user.profile.name.toUpperCase(); // Error if profile is null
-
-// Solution
-user.profile?.name?.toUpperCase() ?? 'Unknown';
-```
-
-### Race Conditions
-```typescript
-// Problem
-let data;
-fetchData().then(result => data = result);
-console.log(data); // undefined
-
-// Solution
-const data = await fetchData();
-console.log(data);
-```
-
-### Off-by-One Errors
-```typescript
-// Problem
-for (let i = 0; i <= arr.length; i++) // <= should be <
-
-// Solution
-for (let i = 0; i < arr.length; i++)
-```
-
-### State Management Issues
-```typescript
-// Problem - mutating state
-state.items.push(newItem);
-
-// Solution - immutable update
-state = { ...state, items: [...state.items, newItem] };
-```
-
----
-
-## Debugging Tools
-
-### Console Debugging
-```typescript
-console.log('Value:', value);
-console.table(arrayOfObjects);
-console.time('operation');
-// ... operation
-console.timeEnd('operation');
-```
-
-### Debugger Statements
-```typescript
-function problematicFunction() {
-  debugger; // Breaks here in dev tools
-  // ...
-}
-```
-
-### Error Boundaries
-```typescript
-try {
-  riskyOperation();
-} catch (error) {
-  console.error('Error:', error);
-  // Handle or rethrow
-}
-```
+| Pattern | Symptoms | Fix Strategy |
+|---------|----------|--------------|
+| **Null/Undefined Errors** | Cannot read property of undefined | Add optional chaining (`?.`) or null checks |
+| **Race Conditions** | Inconsistent state, timing issues | Use async/await, proper sequencing |
+| **Off-by-One Errors** | Loop bounds, array index issues | Review boundary conditions |
+| **State Management Issues** | Unexpected mutations | Use immutable updates |
 
 ---
 
