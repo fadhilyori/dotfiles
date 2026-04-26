@@ -1,4 +1,0 @@
-[submodule ".config/opencode"]
-	path = .config/opencode
-	url = https://github.com/fadhilyori/opencode-config.git
-	branch = main
