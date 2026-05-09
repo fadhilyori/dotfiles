@@ -1,5 +1,5 @@
 # Safety aliases - require confirmation for destructive commands
-alias rm='rm -i'
+alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
 
