@@ -2,11 +2,11 @@
 adjust-cell-height = 35%
 
 #theme = dark:"Broadcast",light:"Horizon Bright"
-theme = "Catppuccin Mocha"
+theme = light:"Catppuccin Latte",dark:"Catppuccin Mocha"
 
 # Background and window effects
-background-opacity = 0.8
-background-blur = 90
+background-opacity = 1
+# background-blur = 90
 
 # Quick terminal configuration
 quick-terminal-position = top
@@ -23,8 +23,8 @@ window-save-state = always
 undo-timeout = 10s
 
 # Font configuration
-font-family = "SauceCodePro Nerd Font"
-font-size = 12
+font-family = "Iosevka Nerd Font Mono"
+font-size = 10
 font-feature = +calt
 
 # Link and mouse settings
@@ -41,8 +41,8 @@ cursor-style-blink = true
 selection-clear-on-typing = true
 right-click-action = copy
 
-# Bell configuration (visual feedback only)
-bell-features = no-system,no-audio,attention,title
+# Bell configuration
+bell-features = system,attention,title
 
 # Shell integration with SSH improvements
 shell-integration-features = no-cursor,sudo,title,ssh-terminfo,ssh-env
