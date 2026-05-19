@@ -27,6 +27,7 @@ MANUAL.*
 
 # Scripts and executable files
 setup\.sh
+Makefile
 
 # Configuration files that should be sourced, not symlinked
 \.bash_config
