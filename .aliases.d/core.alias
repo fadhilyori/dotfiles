@@ -40,9 +40,6 @@ fi
 #    alias grep='rg --color=auto'
 #fi
 
-# Enhanced htop with tree view
-alias htop='htop -t'
-
 # Editor aliases (only if Neovim is available)
 if command -v nvim >/dev/null 2>&1; then
     alias v='nvim'
