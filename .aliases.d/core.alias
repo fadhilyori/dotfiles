@@ -59,8 +59,10 @@ fi
 # Use zoxide for smarter directory navigation (if available)
 if command -v zoxide >/dev/null 2>&1; then
     alias cd='z'
-    alias cdi='zi'  # interactive directory selection with fzf
+else
+    alias cd='builtin cd'  # fallback to builtin if zoxide unavailable
 fi
+alias cdi='zi'  # interactive directory selection with fzf
 alias ..='cd ..'
 alias ...='cd ../..'
 
@@ -72,22 +74,6 @@ alias apts='apt search'                    # apt search
 alias aptr='sudo apt remove -y'            # apt remove
 alias aptc='sudo apt autoremove -y && sudo apt autoclean'  # apt clean
 alias aptsh='apt show'                     # apt show
-
-# Git aliases
-alias gst='git status -sb'                 # git status with branch info
-alias gco='git checkout'                   # git checkout
-alias gcb='git checkout -b'                # git checkout new branch
-alias ga='git add -A'                       # git add all (tracked + untracked)
-alias gc='git commit -m'                   # git commit with message
-alias gp='git push'                        # git push
-alias gpl='git pull'                       # git pull
-alias gd='git diff'                        # git diff
-alias gds='git diff --staged'              # git diff staged
-alias gg='git log --oneline --graph --decorate'  # git log graph
-alias gln='git log --oneline --graph --decorate -10'  # git log last 10
-alias grs='git reset --soft'               # git reset soft
-alias grh='git reset --hard'               # git reset hard
-alias gundo='git reset HEAD~1 --soft'      # undo last commit, keep changes
 
 # Docker management aliases
 dstop() { local containers=$(docker ps -q); if [ -n "$containers" ]; then docker stop "$containers"; else echo "No running containers"; fi; }
@@ -210,19 +196,27 @@ if command -v ncdu >/dev/null 2>&1; then
     alias du='ncdu'                        # use ncdu as du
 fi
 
-alias dush='/usr/bin/du -sh * | sort -h'  # directory sizes (uses original du)
+alias dush='/usr/bin/du -sh "$@" | sort -h'  # directory sizes (uses original du)
 alias lsbig='ls -lahS | head -10'          # largest files in directory
 
 # Network diagnostics
 alias myip='curl -s ipinfo.io/ip'           # external IP
 alias myipinfo='curl -s ipinfo.io'          # detailed IP info
-alias ports='netstat -tuln'                 # listening ports
+# listening ports
+ports() {
+    if command -v ss >/dev/null 2>&1; then
+        command ss -tuln "$@"
+    elif command -v netstat >/dev/null 2>&1; then
+        command netstat -tuln "$@"
+    else
+        echo "Neither ss nor netstat is available"
+    fi
+}
 
 # Process management
 alias psa='ps aux'                         # all processes
-alias psg='ps aux | grep -i'               # grep processes (takes argument)
+alias psg='ps aux | grep -i "$@"'          # grep processes (takes argument)
 alias memh='free -h'                       # memory usage human readable
 
-# Dotfiles management
-alias dotfiles='cd ~/.dotfiles'            # go to dotfiles directory
-alias dotfiles-update='cd ~/.dotfiles && git pull origin main && cd -'  # update dotfiles from remote
+alias dotfiles='cd ~/.dotfiles'
+alias dotfiles-update='cd ~/.dotfiles && git pull origin $(git rev-parse --abbrev-ref HEAD) && cd -'
