@@ -8,9 +8,14 @@ UseFontLineChararacters=true
 CursorShape=2
 
 [General]
+AlternatingBackground=1
+AlternatingBars=0
 Command=/bin/fish
+ErrorBackground=0
+ErrorBars=0
 Name=Personal
 Parent=FALLBACK/
+SemanticHints=0
 TerminalCenter=false
 
 [Interaction Options]
@@ -18,6 +23,9 @@ UnderlineFilesEnabled=true
 
 [Keyboard]
 KeyBindings=default
+
+[Scrolling]
+HighlightScrolledLines=false
 
 [Terminal Features]
 AnimatingCursorEnabled=true
