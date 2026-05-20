@@ -1,0 +1,81 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "opencode-wakatime"
+  ],
+  "autoupdate": true,
+  "share": "disabled",
+  "model": "minimax-coding-plan/MiniMax-M2.7",
+  "small_model": "minimax-coding-plan/MiniMax-M2.5",
+  "disabled_providers": [],
+  "permission": "allow",
+  "provider": {},
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.context7.com/mcp/oauth"
+    },
+    "gh_grep": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.grep.app"
+    },
+    "MiniMax": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "uvx",
+        "minimax-coding-plan-mcp",
+        "-y"
+      ],
+      "environment": {
+        "MINIMAX_API_KEY": "{env:MINIMAX_TOKEN_PLAN_API_KEY}",
+        "MINIMAX_API_HOST": "https://api.minimax.io"
+      }
+    },
+    "playwright": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest"
+      ]
+    }
+  },
+  "lsp": {
+    "markdown": {
+      "command": [
+        "marksman",
+        "server"
+      ],
+      "extensions": [
+        ".md",
+        ".mdx"
+      ],
+    }
+  },
+  "compaction": {
+    "auto": true,
+  },
+  "agent": {
+    "explore": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+    "compaction": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+    "plan": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+    "general": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+    "build": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+    "scout": {
+      "model": "minimax-coding-plan/MiniMax-M2.7",
+    },
+  }
+}
