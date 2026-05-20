@@ -46,6 +46,13 @@ function ...
     builtin cd ../..
 end
 
+# Interactive directory selection with fzf
+if command -v zi >/dev/null 2>&1
+    function cdi
+        command zi $argv
+    end
+end
+
 # Package Management (Ubuntu/Debian)
 function apti
     command sudo apt install -y $argv
@@ -320,7 +327,8 @@ function vact
 
     for dir in .venv venv .env env
         if test -f "$dir/bin/activate"
-            source "$dir/bin/activate"
+            set -gx VIRTUAL_ENV (pwd)/$dir
+            set -gx PATH "$VIRTUAL_ENV/bin" $PATH
             echo "Activated: $dir"
             return 0
         end
