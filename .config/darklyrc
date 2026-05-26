@@ -1,0 +1,14 @@
+[Common]
+FloatingTitlebar=true
+ScrollBarTransient=true
+
+[Style]
+DolphinSidebarOpacity=75
+DolphinViewOpacity=75
+MenuBarOpacity=75
+MenuOpacity=75
+TabBarOpacity=75
+ToolBarOpacity=75
+
+[Windeco]
+TitleAlignment=AlignCenterFullWidth
