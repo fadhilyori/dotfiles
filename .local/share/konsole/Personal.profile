@@ -10,7 +10,7 @@ CursorShape=2
 [General]
 AlternatingBackground=1
 AlternatingBars=0
-Command=/bin/fish
+Command=/bin/bash
 ErrorBackground=0
 ErrorBars=0
 Name=Personal
