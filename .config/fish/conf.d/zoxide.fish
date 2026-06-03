@@ -2,8 +2,8 @@
 if command -v zoxide >/dev/null 2>&1
   zoxide init fish | source
 
-  # Override cd to use zoxide
+  # Override cd to use zoxide's z function
   function cd
-    command z $argv
+    z $argv
   end
 end

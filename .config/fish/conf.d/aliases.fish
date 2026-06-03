@@ -369,7 +369,12 @@ end
 # Deactivate (with check)
 function vdeact
     if set -q VIRTUAL_ENV
-        deactivate
+        set -l venv_path "$VIRTUAL_ENV/bin"
+        if contains $venv_path $PATH
+            set -gx PATH (string match -v $venv_path $PATH)
+        end
+        set -e VIRTUAL_ENV
+        echo "Deactivated virtual environment"
     else
         echo "No active virtual environment"
     end
