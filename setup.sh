@@ -16,6 +16,116 @@ log_warning() { printf "${YELLOW}[WARNING]${NC} %s\n" "$*"; }
 
 command_exists() { command -v "$1" >/dev/null 2>&1; }
 
+# Detect distribution and set package management globals
+detect_distro() {
+    if [[ -f /etc/os-release ]]; then
+        source /etc/os-release
+    else
+        log_error "Cannot detect distribution: /etc/os-release not found"
+        exit 1
+    fi
+
+    # Detect Fedora or Debian-based
+    case "$ID" in
+        fedora)
+            DISTRO="fedora"
+            PKG_MANAGER="dnf"
+            ;;
+        debian|ubuntu|pop|mint)
+            DISTRO="debian"
+            PKG_MANAGER="apt"
+            ;;
+        *)
+            # Check ID_LIKE for derived distributions
+            case "$ID_LIKE" in
+                *fedora*)
+                    DISTRO="fedora"
+                    PKG_MANAGER="dnf"
+                    ;;
+                *debian*)
+                    DISTRO="debian"
+                    PKG_MANAGER="apt"
+                    ;;
+                *)
+                    log_error "Unsupported distribution: $ID (ID_LIKE=$ID_LIKE)"
+                    exit 1
+                    ;;
+            esac
+            ;;
+    esac
+
+    log_info "Detected distro: $DISTRO ($ID), using $PKG_MANAGER"
+}
+
+# Package name mapping (Debian → Fedora)
+declare -A PKG_MAP=(
+    [git]="git"
+    [curl]="curl"
+    [stow]="stow"
+    [starship]="starship"
+    [fzf]="fzf"
+    [bat]="bat"
+    [ripgrep]="ripgrep"
+    [git-delta]="git-delta"
+    [tree]="tree"
+    [dnsutils]="bind-utils"
+    [ffmpeg]="ffmpeg-free"
+    [p7zip-full]="p7zip"
+    [jq]="jq"
+    [poppler-utils]="poppler-utils"
+    [fd-find]="fd-find"
+    [zoxide]="zoxide"
+    [imagemagick]="ImageMagick"
+    [kitty]="kitty"
+    [duf]="duf"
+    [ncdu]="ncdu"
+    [wl-clipboard]="wl-clipboard"
+    [gnupg2]="gnupg2"
+    [fonts-adobe-sourcesans3]="adobe-source-sans-3-fonts"
+    [fonts-cantarell]="abattis-cantarell-fonts"
+    [fonts-cascadia-code]="cascadia-code-fonts"
+    [fonts-dejavu-core]="dejavu-sans-mono-fonts"
+    [fonts-firacode]="fira-code-fonts"
+    [fonts-font-awesome]="fontawesome-fonts"
+    [fonts-inter]="google-inter-fonts"
+    [fonts-jetbrains-mono]="jetbrains-mono-fonts"
+    [fonts-noto]="google-noto-fonts"
+)
+
+# Resolve package name based on distribution
+resolve_pkg() {
+    local deb_name="$1"
+    if [[ "$DISTRO" == "fedora" ]] && [[ -v PKG_MAP[$deb_name] ]]; then
+        echo "${PKG_MAP[$deb_name]}"
+    else
+        echo "$deb_name"
+    fi
+}
+
+# Install packages (accepts multiple package name arguments)
+pkg_install() {
+    local resolved=()
+    local pkg
+    for pkg in "$@"; do
+        resolved+=("$(resolve_pkg "$pkg")")
+    done
+    if [[ "$DISTRO" == "fedora" ]]; then
+        sudo dnf install -y "${resolved[@]}"
+    else
+        sudo apt install -y "${resolved[@]}"
+    fi
+}
+
+# Update package lists
+pkg_update() {
+    if [[ "$DISTRO" == "fedora" ]]; then
+        # dnf check-update exits 100 when updates are available (not an error)
+        sudo dnf check-update || [[ $? -eq 100 ]]
+    else
+        sudo apt update -qq
+    fi
+}
+
 # Parse arguments
 AUTO_SETUP=false
 PACKAGES_ONLY=false
@@ -38,17 +148,13 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Detect distro as early as possible
+detect_distro
+
 # Install system packages
 install_packages() {
     log_info "Installing required packages"
-    local packages=("git" "curl" "stow")
-
-    if command -v apt >/dev/null 2>&1; then
-        sudo apt update && sudo apt install -y "${packages[@]}"
-    else
-        log_error "Unsupported system: apt package manager required"
-        exit 1
-    fi
+    pkg_install git curl stow
 }
 
 # Install optional development tools
@@ -56,30 +162,34 @@ install_optional_tools() {
     log_info "Installing optional development tools"
 
     declare -A tools=(
-        ["starship"]="starship"
-        ["fzf"]="fzf"
-        ["batcat"]="bat"
-        ["rg"]="ripgrep"
-        ["delta"]="git-delta"
-        ["tree"]="tree"
-        ["dig"]="dnsutils"
-        ["ffmpeg"]="ffmpeg"
-        ["7z"]="p7zip-full"
-        ["jq"]="jq"
-        ["pdftotext"]="poppler-utils"
-        ["fd"]="fd-find"
-        ["zoxide"]="zoxide"
-        ["convert"]="imagemagick"
-        ["kitty"]="kitty"
-        ["duf"]="duf"
-        ["ncdu"]="ncdu"
-        ["wl-copy"]="wl-clipboard"
+        [starship]="starship"
+        [fzf]="fzf"
+        [batcat]="bat"
+        [rg]="ripgrep"
+        [delta]="git-delta"
+        [tree]="tree"
+        [dig]="dnsutils"
+        [ffmpeg]="ffmpeg"
+        [7z]="p7zip-full"
+        [jq]="jq"
+        [pdftotext]="poppler-utils"
+        [fd]="fd-find"
+        [zoxide]="zoxide"
+        [convert]="imagemagick"
+        [kitty]="kitty"
+        [duf]="duf"
+        [ncdu]="ncdu"
+        [wl-copy]="wl-clipboard"
     )
 
     for cmd in "${!tools[@]}"; do
-        if ! command_exists "$cmd"; then
+        local check_cmd="$cmd"
+        # On Fedora, bat binary is named 'bat', not 'batcat'
+        [[ "$DISTRO" == "fedora" && "$cmd" == "batcat" ]] && check_cmd="bat"
+
+        if ! command_exists "$check_cmd"; then
             log_info "Installing ${tools[$cmd]}..."
-            sudo apt install -y "${tools[$cmd]}"
+            pkg_install "${tools[$cmd]}" || log_warning "Failed to install ${tools[$cmd]}"
         else
             log_success "${tools[$cmd]} already installed"
         fi
@@ -87,7 +197,13 @@ install_optional_tools() {
 
     if ! command_exists yazi; then
         log_info "Installing yazi..."
-        sudo snap install yazi --classic
+        if [[ "$DISTRO" == "fedora" ]]; then
+            # Fedora has yazi in repos
+            pkg_install "yazi"
+        else
+            # Debian: use snap
+            sudo snap install yazi --classic
+        fi
     else
         log_success "yazi already installed"
     fi
@@ -101,29 +217,35 @@ install_optional_tools() {
 
 install_eza() {
     log_info "Installing eza..."
-    local gpg_keyring="/etc/apt/keyrings/gierens.gpg"
-    local gpg_src="https://raw.githubusercontent.com/eza-community/eza/main/deb.asc"
+    if [[ "$DISTRO" == "fedora" ]]; then
+        # Fedora: available directly in repos
+        pkg_install "eza"
+    else
+        # Debian: GPG key + custom apt repo
+        local gpg_keyring="/etc/apt/keyrings/gierens.gpg"
+        local gpg_src="https://raw.githubusercontent.com/eza-community/eza/main/deb.asc"
 
-    sudo apt install -y gpg
-    sudo mkdir -p /etc/apt/keyrings
+        sudo apt install -y gnupg2
+        sudo mkdir -p /etc/apt/keyrings
 
-    local key_temp="$(mktemp)"
-    if ! wget -qO "$key_temp" "$gpg_src"; then
-        log_error "Failed to download eza GPG key"
+        local key_temp="$(mktemp)"
+        if ! wget -qO "$key_temp" "$gpg_src"; then
+            log_error "Failed to download eza GPG key"
+            rm -f "$key_temp"
+            return 1
+        fi
+
+        if ! sudo gpg --dearmor -o "$gpg_keyring" "$key_temp" 2>/dev/null; then
+            log_error "Failed to process eza GPG key"
+            rm -f "$key_temp"
+            return 1
+        fi
         rm -f "$key_temp"
-        return 1
-    fi
 
-    if ! sudo gpg --dearmor -o "$gpg_keyring" "$key_temp" 2>/dev/null; then
-        log_error "Failed to process eza GPG key"
-        rm -f "$key_temp"
-        return 1
+        echo "deb [signed-by=$gpg_keyring] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
+        sudo chmod 644 "$gpg_keyring" /etc/apt/sources.list.d/gierens.list
+        sudo apt install -y eza
     fi
-    rm -f "$key_temp"
-
-    echo "deb [signed-by=$gpg_keyring] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
-    sudo chmod 644 "$gpg_keyring" /etc/apt/sources.list.d/gierens.list
-    sudo apt install -y eza
 }
 
 # Install fonts
@@ -142,8 +264,8 @@ install_fonts() {
         "fonts-noto"
     )
 
-    log_info "Installing fonts using apt..."
-    sudo apt install -y "${fonts[@]}"
+    log_info "Installing fonts..."
+    pkg_install "${fonts[@]}"
 
     # Refresh font cache
     if command -v fc-cache >/dev/null 2>&1; then
@@ -288,9 +410,7 @@ main() {
         return 0
     fi
 
-    if [ "$PACKAGES_ONLY" = true ]; then
-        log_info "Starting packages-only installation"
-    else
+    if [ "$PACKAGES_ONLY" = false ]; then
         log_info "Starting dotfiles setup"
     fi
 
@@ -308,7 +428,7 @@ main() {
     fi
 
     if [ "$PACKAGES_ONLY" = false ]; then
-        sudo apt update -qq
+        pkg_update
     fi
 
     # Install optional development tools
