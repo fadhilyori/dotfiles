@@ -5,8 +5,8 @@
   ],
   "autoupdate": true,
   "share": "disabled",
-  "model": "minimax-coding-plan/MiniMax-M2.7",
-  "small_model": "minimax-coding-plan/MiniMax-M2.5",
+  "model": "minimax-coding-plan/MiniMax-M3",
+  "small_model": "minimax-coding-plan/MiniMax-M2.7",
   "disabled_providers": [],
   "permission": "allow",
   "provider": {},
@@ -35,7 +35,7 @@
       }
     },
     "playwright": {
-      "enabled": true,
+      "enabled": false,
       "type": "local",
       "command": [
         "npx",
@@ -60,22 +60,22 @@
   },
   "agent": {
     "explore": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
     "compaction": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
     "plan": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
     "general": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
     "build": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
     "scout": {
-      "model": "minimax-coding-plan/MiniMax-M2.7",
+      "model": "minimax-coding-plan/MiniMax-M3",
     },
   }
 }
