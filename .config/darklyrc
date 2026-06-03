@@ -3,12 +3,12 @@ FloatingTitlebar=true
 ScrollBarTransient=true
 
 [Style]
-DolphinSidebarOpacity=75
-DolphinViewOpacity=75
-MenuBarOpacity=75
-MenuOpacity=75
-TabBarOpacity=75
-ToolBarOpacity=75
+DolphinSidebarOpacity=90
+DolphinViewOpacity=90
+MenuBarOpacity=90
+MenuOpacity=90
+TabBarOpacity=90
+ToolBarOpacity=90
 
 [Windeco]
 TitleAlignment=AlignCenterFullWidth

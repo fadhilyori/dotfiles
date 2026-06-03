@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=catppuccin-mocha
-Font=JetBrainsMono Nerd Font,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+Font=JetBrainsMono Nerd Font,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 LineSpacing=0
 UseFontLineChararacters=true
 
@@ -17,6 +17,8 @@ Name=Personal
 Parent=FALLBACK/
 SemanticHints=0
 TerminalCenter=false
+TerminalColumns=110
+TerminalRows=30
 
 [Interaction Options]
 UnderlineFilesEnabled=true
