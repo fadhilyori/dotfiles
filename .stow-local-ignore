@@ -45,3 +45,7 @@ tmp
 
 # Claude AI configuration files
 \.claude
+
+# OpenCode configuration files - these should NOT be symlinked
+\.config/opencode/\.env\.example
+\.config/opencode/\.gitignore

@@ -1,0 +1,22 @@
+[Unit]
+Description=OpenCode Web Server
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+WorkingDirectory=%h
+EnvironmentFile=%h/.config/opencode/.env
+ExecStart=%h/.opencode/bin/opencode web
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=20
+PrivateTmp=yes
+MemoryMax=4G
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

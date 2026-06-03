@@ -223,3 +223,6 @@ alias memh='free -h'                       # memory usage human readable
 
 alias dotfiles='cd ~/.dotfiles'
 alias dotfiles-update='cd ~/.dotfiles && git pull origin $(git rev-parse --abbrev-ref HEAD) && cd -'
+
+# OpenCode attach to current server
+alias oc='opencode attach http://localhost:4096 --dir .'
