@@ -1,4 +1,4 @@
 .PHONY: stow
 
 stow:
-	stow --no-folding .
+	@stow -v --no-folding .
