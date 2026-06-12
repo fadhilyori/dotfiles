@@ -1,6 +1,8 @@
 // Zed settings
 //
 {
+    "mouse_wheel_zoom": false,
+    "preferred_line_length": 120,
     "cli_default_open_behavior": "new_window",
     "terminal": {
         "flexible": true,
@@ -22,12 +24,11 @@
         "allowed": true
     },
     "format_on_save": "off",
-    "preferred_line_length": 130,
     "restore_on_startup": "launchpad",
     "icon_theme": {
         "mode": "system",
         "light": "Zed (Default)",
-        "dark": "Zed (Default)"
+        "dark": "Catppuccin Mocha"
     },
     "theme": {
         "mode": "system",
@@ -97,53 +98,8 @@
         }
     },
     "language_models": {
-        "anthropic": {
-            "api_url": "https://api.minimax.io/anthropic",
-            "available_models": [
-                {
-                    "name": "MiniMax-M2.7",
-                    "max_tokens": 204800,
-                    "max_output_tokens": 131072
-                },
-                {
-                    "name": "MiniMax-M2.5",
-                    "max_tokens": 204800,
-                    "max_output_tokens": 131072
-                }
-            ]
-        },
-        "openai_compatible": {
-            "OpenCode Go": {
-                "api_url": "https://opencode.ai/zen/go",
-                "available_models": [
-                    {
-                        "name": "kimi-k2.5",
-                        "max_tokens": 262144,
-                        "max_output_tokens": 65536,
-                        "display_name": "Kimi K2.5",
-                        "capabilities": {
-                            "tools": true,
-                            "images": true,
-                            "parallel_tool_calls": true,
-                            "prompt_cache_key": false,
-                            "chat_completions": true
-                        }
-                    },
-                    {
-                        "name": "glm-5",
-                        "max_tokens": 204800,
-                        "max_output_tokens": 131072,
-                        "display_name": "GLM-5",
-                        "capabilities": {
-                            "tools": true,
-                            "images": false,
-                            "parallel_tool_calls": true,
-                            "prompt_cache_key": false,
-                            "chat_completions": true
-                        }
-                    }
-                ]
-            }
+        "opencode": {
+            "show_zen_models": false
         }
     },
     "edit_predictions": {
@@ -151,27 +107,16 @@
         "provider": "zed"
     },
     "agent": {
+        "default_model": {
+            "provider": "opencode",
+            "model": "go/minimax-m2.7",
+            "enable_thinking": false
+        },
+        "sidebar_side": "right",
         "dock": "right",
         "show_turn_stats": true,
         "single_file_review": true,
         "default_profile": "ask",
-        "default_model": {
-            "provider": "anthropic",
-            "model": "MiniMax-M2.7",
-            "enable_thinking": true
-        },
-        "commit_message_model": {
-            "provider": "anthropic",
-            "model": "MiniMax-M2.7",
-            "enable_thinking": false
-        },
-        "favorite_models": [
-            {
-                "provider": "anthropic",
-                "model": "MiniMax-M2.7",
-                "enable_thinking": true
-            }
-        ],
         "play_sound_when_agent_done": "always",
         "model_parameters": []
     },
