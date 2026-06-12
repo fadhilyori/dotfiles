@@ -1,10 +1,29 @@
 // Zed settings
 //
 {
+    "diff_view_style": "split",
     "mouse_wheel_zoom": false,
     "preferred_line_length": 120,
+    "vim": {
+        "cursor_shape": {
+            "visual": "bar",
+            "normal": "bar"
+        }
+    },
+    "minimap": {
+        "current_line_highlight": "all",
+        "thumb": "always",
+        "show": "auto"
+    },
+    "sticky_scroll": {
+        "enabled": true
+    },
+    "ui_font_weight": 400.0,
+    "semantic_tokens": "combined",
+    "code_lens": "on",
     "cli_default_open_behavior": "new_window",
     "terminal": {
+        "cursor_shape": "underline",
         "flexible": true,
         "dock": "bottom",
         "show_count_badge": true
@@ -27,7 +46,7 @@
     "restore_on_startup": "launchpad",
     "icon_theme": {
         "mode": "system",
-        "light": "Zed (Default)",
+        "light": "Catppuccin Latte",
         "dark": "Catppuccin Mocha"
     },
     "theme": {
@@ -35,11 +54,11 @@
         "light": "Catppuccin Latte",
         "dark": "Catppuccin Mocha"
     },
-    "ui_font_family": "JetBrains Mono",
+    "ui_font_family": ".SystemUIFont",
     "ui_font_size": 16,
-    "buffer_font_family": "JetBrainsMono Nerd Font",
+    "buffer_font_family": "Fira Code",
     "buffer_font_size": 16,
-    "buffer_font_weight": 300,
+    "buffer_font_weight": 400,
     "buffer_line_height": {
         "custom": 1.6
     },
@@ -103,7 +122,8 @@
         }
     },
     "edit_predictions": {
-        "mode": "subtle",
+        "allow_data_collection": "no",
+        "mode": "eager",
         "provider": "zed"
     },
     "agent": {
@@ -123,7 +143,7 @@
     "hard_tabs": false,
     "tab_size": 4,
     "base_keymap": "VSCode",
-    "current_line_highlight": "none",
+    "current_line_highlight": "gutter",
     "autosave": {
         "after_delay": {
             "milliseconds": 2000
@@ -139,6 +159,16 @@
             "format_on_save": "on"
         },
         "Python": {
+            "document_symbols": "off",
+            "colorize_brackets": true,
+            "inlay_hints": {
+                "show_background": false
+            },
+            "allow_rewrap": "in_comments",
+            "indent_guides": {
+                "coloring": "indent_aware",
+                "background_coloring": "disabled"
+            },
             "code_actions_on_format": {
                 "source.organizeImports.ruff": true
             },
