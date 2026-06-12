@@ -1,7 +1,55 @@
+# vim: ft=bash
+
 # Safety aliases - require confirmation for destructive commands
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
+
+# Alias for MOSH and SSH
+ssh() {
+    # Fallback immediately if mosh is not installed
+    command -v mosh &>/dev/null || { command ssh "$@"; return; }
+    [ $# -eq 0 ] && { command ssh; return; }
+
+    local args=("$@")
+    local use_ssh=0
+    local ssh_flags=()   # translatable flags → passed via mosh --ssh=
+    local pass_args=()   # remaining args → passed directly to mosh
+    local i=0
+
+    while [ $i -lt ${#args[@]} ]; do
+        local arg="${args[$i]}"
+        case "$arg" in
+            # Hard fallback: fundamentally incompatible with mosh
+            # Port forwarding, X11, jump host, stdio forward, no-command mode
+            -[LRDWNTJXYe]*)
+                use_ssh=1
+                use_ssh_reason="incompatible flag: $arg"
+                break ;;
+
+            # Translatable: port, identity, ssh options
+            # These are safe to forward via --ssh="ssh <flags>"
+            -p|-i|-o)
+                ssh_flags+=("$arg" "${args[$((i+1))]}"); ((i++)) ;;
+            -p*|-i*|-o*)
+                ssh_flags+=("$arg") ;;
+
+            # Pass everything else to mosh (host, remote commands, other flags)
+            *)
+                pass_args+=("$arg") ;;
+        esac
+        ((i++))
+    done
+
+    if [ "$use_ssh" -eq 1 ]; then
+        echo "[ssh] fallback to native ssh ($use_ssh_reason)" >&2
+        command ssh "$@"
+    elif [ ${#ssh_flags[@]} -gt 0 ]; then
+        mosh --ssh="ssh ${ssh_flags[*]}" "${pass_args[@]}"
+    else
+        mosh "${pass_args[@]}"
+    fi
+}
 
 # Alias for Zed Extension
 alias nginx-language-server='uvx nginx-language-server'
