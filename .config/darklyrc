@@ -1,6 +1,7 @@
 [Common]
 FloatingTitlebar=true
 ScrollBarTransient=true
+SunkenEffect=true
 
 [Style]
 DolphinSidebarOpacity=90
@@ -9,6 +10,7 @@ MenuBarOpacity=90
 MenuOpacity=90
 TabBarOpacity=90
 ToolBarOpacity=90
+renderThinSeperatorBetweenTheScrollBar=true
 
 [Windeco]
 TitleAlignment=AlignCenterFullWidth
