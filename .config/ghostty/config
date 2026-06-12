@@ -23,8 +23,8 @@ window-save-state = always
 undo-timeout = 10s
 
 # Font configuration
-font-family = "Iosevka Nerd Font Mono"
-font-size = 10
+font-family = "Fira Code"
+font-size = 11
 font-feature = +calt
 
 # Link and mouse settings
