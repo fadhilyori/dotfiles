@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=catppuccin-mocha
-Font=JetBrainsMono Nerd Font,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+Font=Fira Code,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 LineSpacing=0
 UseFontLineChararacters=true
 
