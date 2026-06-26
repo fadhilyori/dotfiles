@@ -58,7 +58,7 @@
     "ui_font_family": ".SystemUIFont",
     "ui_font_size": 14.0,
     "buffer_font_family": "Fira Code",
-    "buffer_font_size": 14,
+    "buffer_font_size": 14.0,
     "buffer_font_weight": 400,
     "buffer_line_height": {
         "custom": 1.6
@@ -82,7 +82,9 @@
         "show": true
     },
     "file_types": {
-        "HAProxy": ["haproxy.cfg"]
+        "HAProxy": [
+            "haproxy.cfg"
+        ]
     },
     "git": {
         "gutter_debounce": 30,
@@ -112,13 +114,20 @@
     "relative_line_numbers": "disabled",
     "agent_servers": {
         "OpenCode": {
+            "default_config_options": {
+                "effort": "thinking",
+                "model": "local-proxy/minimax/MiniMax-M3"
+            },
             "command": "~/.opencode/bin/opencode",
-            "args": ["acp"],
+            "args": [
+                "acp"
+            ],
             "type": "custom"
         }
     },
     "language_models": {
         "opencode": {
+            "show_go_models": false,
             "show_zen_models": false
         }
     },
@@ -147,7 +156,7 @@
     "current_line_highlight": "gutter",
     "autosave": {
         "after_delay": {
-            "milliseconds": 2000
+            "milliseconds": 2500
         }
     },
     "cursor_shape": "bar",
@@ -193,12 +202,22 @@
             "formatter": {
                 "external": {
                     "command": "shfmt",
-                    "arguments": ["--filename", "{buffer_path}", "--indent", "4"]
+                    "arguments": [
+                        "--filename",
+                        "{buffer_path}",
+                        "--indent",
+                        "4"
+                    ]
                 }
             }
         },
         "PHP": {
-            "language_servers": ["phpactor", "!intelephense", "!phptools", "..."]
+            "language_servers": [
+                "phpactor",
+                "!intelephense",
+                "!phptools",
+                "..."
+            ]
         },
         "TypeScript": {
             "tab_size": 2
