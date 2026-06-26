@@ -1,6 +1,8 @@
 [Common]
-FloatingTitlebar=true
+CornerRadius=12
+OutlineCloseButton=true
 ScrollBarTransient=true
+ShadowStrength=51
 SunkenEffect=true
 
 [Style]
@@ -10,7 +12,9 @@ MenuBarOpacity=90
 MenuOpacity=90
 TabBarOpacity=90
 ToolBarOpacity=90
+WidgetToolBarShadow=true
 renderThinSeperatorBetweenTheScrollBar=true
 
 [Windeco]
+OtherCornerRadius=4
 TitleAlignment=AlignCenterFullWidth
