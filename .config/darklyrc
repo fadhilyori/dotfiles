@@ -6,12 +6,12 @@ ShadowStrength=51
 SunkenEffect=true
 
 [Style]
-DolphinSidebarOpacity=90
-DolphinViewOpacity=90
-MenuBarOpacity=90
-MenuOpacity=90
-TabBarOpacity=90
-ToolBarOpacity=90
+DolphinSidebarOpacity=85
+DolphinViewOpacity=85
+MenuBarOpacity=85
+MenuOpacity=85
+TabBarOpacity=85
+ToolBarOpacity=85
 WidgetToolBarShadow=true
 renderThinSeperatorBetweenTheScrollBar=true
 
