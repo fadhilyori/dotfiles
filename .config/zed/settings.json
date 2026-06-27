@@ -36,6 +36,10 @@
         "dock": "left"
     },
     "git_panel": {
+        "collapse_untracked_diff": false,
+        "show_count_badge": true,
+        "file_icons": true,
+        "status_style": "icon",
         "dock": "left",
         "sort_by_path": true,
         "tree_view": true
@@ -87,6 +91,9 @@
         ]
     },
     "git": {
+        "show_stage_restore_buttons": true,
+        "path_style": "file_name_first",
+        "hunk_style": "unstaged_hollow",
         "gutter_debounce": 30,
         "inline_blame": {
             "delay_ms": 200,
@@ -101,6 +108,8 @@
         "button_layout": "standard"
     },
     "project_panel": {
+        "git_status": true,
+        "git_status_indicator": false,
         "dock": "left",
         "bold_folder_labels": false,
         "folder_icons": true,
