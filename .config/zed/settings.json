@@ -142,7 +142,7 @@
     },
     "edit_predictions": {
         "allow_data_collection": "no",
-        "mode": "eager",
+        "mode": "subtle",
         "provider": "zed"
     },
     "agent": {
