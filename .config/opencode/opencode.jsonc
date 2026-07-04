@@ -6,6 +6,7 @@
     "plugin": [
         "opencode-wakatime",
         "context-mode",
+        "@plannotator/opencode@latest"
     ],
     "autoupdate": true,
     "share": "disabled",
