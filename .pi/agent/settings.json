@@ -1,0 +1,37 @@
+{
+  "lastChangelogVersion": "0.80.3",
+  "theme": "catppuccin-latte/catppuccin-mocha",
+  "defaultProvider": "personal",
+  "defaultModel": "MiniMax-M3",
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "enableInstallTelemetry": false,
+  "defaultProjectTrust": "always",
+  "defaultThinkingLevel": "high",
+  "images": {
+    "blockImages": false
+  },
+  "packages": [
+    "npm:@firstpick/pi-themes-bundle",
+    "npm:context-mode",
+    "npm:pi-mcp-adapter",
+    "npm:pi-subagents",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-advisor",
+    "npm:pi-bar",
+    "npm:pi-intercom",
+    "npm:pi-prompt-template-model",
+    "npm:@vndv/pi-codegraph",
+    "npm:@plannotator/pi-extension",
+    "npm:@upstash/context7-pi"
+  ],
+  "showHardwareCursor": false,
+  "editorPaddingX": 0,
+  "followUpMode": "all",
+  "steeringMode": "all",
+  "transport": "auto",
+  "hideThinkingBlock": true,
+  "quietStartup": true
+}
