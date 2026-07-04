@@ -9,7 +9,7 @@
     ],
     "autoupdate": true,
     "share": "disabled",
-    "default_agent": "kai",
+    "default_agent": "plan",
     "model": "personal/MiniMax-M3",
     "small_model": "personal/MiniMax-M2.7",
     "disabled_providers": [],
