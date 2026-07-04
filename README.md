@@ -6,55 +6,25 @@ My personal dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/
 
 ```bash
 git clone https://github.com/fadhilyori/.dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./setup.sh -s    # Auto-setup bash and nano
-exec $SHELL      # Reload shell
 ```
 
-Supports **Ubuntu/Debian** (`apt`) and **Fedora** (`dnf`). Requires **Bash** and sudo access. Internet connection required to download packages.
+Full install guide in [INSTALL.md](INSTALL.md), or run `./setup.sh` to do it automatically.
+
+Tested on Ubuntu/Debian (apt) and Fedora (dnf). Needs Bash and sudo.
 
 ## Configuration
 
 ### Bash (.bash_config)
 
-Quick setup (sets up both Bash and Nano):
-```bash
-./setup.sh -s
-```
-
-Or manually — add to `~/.bashrc`:
-```bash
-if [ -f "$HOME/.dotfiles/.bash_config" ]; then
-    . "$HOME/.dotfiles/.bash_config"
-fi
-```
-
-Then run `source ~/.bashrc` or `exec $SHELL`.
-
-Load order: `.bashrc` → `.bash_config` → `.aliases.d/*.alias`.
+Wired up via [INSTALL.md §6](INSTALL.md#6-wire-up-bash-and-nano). Load order: `.bashrc` → `.bash_config` → `.aliases.d/*.alias`.
 
 ### Nano (.nanorc)
 
-Configured automatically via `./setup.sh -s`. Includes syntax highlighting for 30+ languages.
-
-To set up manually, add to `~/.nanorc`:
-```bash
-include "~/.dotfiles/.nanorc"
-```
+Wired up via [INSTALL.md §6](INSTALL.md#6-wire-up-bash-and-nano). Includes syntax highlighting for 30+ languages.
 
 ### GNU Stow
 
-All config files are symlinked into place using [GNU Stow](https://www.gnu.org/software/stow/). The `.stow-local-ignore` file controls what gets excluded from symlinking.
-
-```bash
-make stow    # Symlinks everything (runs: stow --no-folding .)
-```
-
-Stow packages:
-- `.config/` → `~/.config/` (app configs)
-- `.local/`  → `~/.local/`  (KDE profiles, color schemes)
-- `bin/`     → `~/bin/`     (utility scripts)
-- `.gitconfig` → `~/.gitconfig`
+Configs are symlinked with [GNU Stow](https://www.gnu.org/software/stow/) (`--no-folding`). `.stow-local-ignore` controls what's excluded. See [INSTALL.md §5](INSTALL.md#5-stow-the-dotfiles).
 
 ### Other Configs
 
@@ -64,7 +34,7 @@ Stow packages:
 | `.prettierrc.json` | Code formatter defaults |
 | `.ansible.cfg` | Ansible global configuration |
 
-## Cheatsheet — Aliases & Commands
+## Cheatsheet: aliases and commands
 
 ### Safety
 ```bash
@@ -191,10 +161,10 @@ icat file.png        # preview image in terminal (kitten icat)
 
 ```
 ~/.dotfiles/
-├── setup.sh                   # Bootstrap script (bash + nano setup)
+├── setup.sh                   # Auto-setup wrapper (manual steps in INSTALL.md)
 ├── Makefile                   # stow --no-folding . (symlinks everything)
 ├── .stow-local-ignore         # Controls what stow excludes
-├── .bash_config               # Main config — everything loaded from here
+├── .bash_config               # Main config: everything loaded from here
 ├── .nanorc                    # Nano syntax highlighting (30+ languages)
 ├── .inputrc                   # Readline keybindings
 ├── .prettierrc.json           # Code formatter defaults
@@ -223,38 +193,6 @@ To add aliases, create or edit `~/.dotfiles/.aliases.d/*.alias`:
 alias myproject='cd ~/projects/my-project'
 alias weather='curl wttr.in'
 ```
-
-## KDE Plasma Setup
-
-### Theme — [Darkly](https://github.com/Bali10050/Darkly)
-
-Qt application style, window decoration, and color scheme. Fork of Lightly.
-
-```bash
-git clone https://github.com/Bali10050/Darkly.git
-cd Darkly
-./install.sh
-```
-
-Also available via AUR, Fedora COPR, and pre-built packages.
-
-### Theme — [Catppuccin](https://github.com/catppuccin/kde) (alternative)
-
-Soothing pastel theme for KDE Plasma. Includes application style, window decoration, color scheme, and Konsole profiles.
-
-```bash
-git clone https://github.com/catppuccin/kde.git
-cd kde
-./install.sh
-```
-
-Also available via the KDE Store and AUR.
-
-### Widgets
-
-- **[KDE Modern Clock](https://store.kde.org/p/2135653/)** — simple modern clock for the desktop (not the panel), Plasma 6 ready.
-- **[Panel Colorizer](https://store.kde.org/p/2130967)** — Plasma panel customization, 30+ built-in presets, create your own.
-- **[plasmusic-toolbar](https://store.kde.org/p/2128143/)** — shows currently playing song on the panel, compatible with Plasma 6.0.4+.
 
 ## License
 
