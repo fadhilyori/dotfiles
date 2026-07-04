@@ -1,6 +1,17 @@
 // Zed settings
 //
 {
+    "$schema": "zed://schemas/settings",
+    "context_servers": {
+        "semble": {
+            "command": "uvx",
+            "args": [
+                "--from",
+                "semble[mcp]",
+                "semble"
+            ]
+        }
+    },
     "redact_private_values": true,
     "diff_view_style": "split",
     "mouse_wheel_zoom": false,
@@ -41,7 +52,7 @@
         "file_icons": true,
         "status_style": "icon",
         "dock": "left",
-        "sort_by_path": true,
+        "sort_by": "path",
         "tree_view": true
     },
     "prettier": {
@@ -125,7 +136,7 @@
         "OpenCode": {
             "default_config_options": {
                 "effort": "thinking",
-                "model": "local-proxy/minimax/MiniMax-M3"
+                "model": "personal/MiniMax-M3"
             },
             "command": "~/.opencode/bin/opencode",
             "args": [
@@ -171,7 +182,7 @@
     "cursor_shape": "bar",
     "languages": {
         "YAML": {
-            "tab_size": 2,
+            "tab_size": 4,
             "hard_tabs": false
         },
         "Nginx": {
