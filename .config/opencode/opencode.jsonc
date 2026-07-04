@@ -1,81 +1,309 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "opencode-wakatime"
-  ],
-  "autoupdate": true,
-  "share": "disabled",
-  "model": "minimax-coding-plan/MiniMax-M3",
-  "small_model": "minimax-coding-plan/MiniMax-M2.7",
-  "disabled_providers": [],
-  "permission": "allow",
-  "provider": {},
-  "mcp": {
-    "context7": {
-      "type": "remote",
-      "enabled": true,
-      "url": "https://mcp.context7.com/mcp/oauth"
+    "$schema": "https://opencode.ai/config.json",
+    "instructions": [
+        "CONTRIBUTING.md"
+    ],
+    "plugin": [
+        "opencode-wakatime",
+        "context-mode",
+    ],
+    "autoupdate": true,
+    "share": "disabled",
+    "default_agent": "kai",
+    "model": "personal/MiniMax-M3",
+    "small_model": "personal/MiniMax-M2.7",
+    "disabled_providers": [],
+    "experimental": {
+        "disable_paste_summary": true
     },
-    "gh_grep": {
-      "type": "remote",
-      "enabled": true,
-      "url": "https://mcp.grep.app"
+    "provider": {
+        "personal": {
+            "npm": "@ai-sdk/anthropic",
+            "name": "Personal",
+            "options": {
+                "baseURL": "{env:PERSONAL_ANTHROPIC_BASE_URL}",
+                "apiKey": "{env:PERSONAL_ANTHROPIC_API_KEY}"
+            },
+            "models": {
+                "MiniMax-M2.7": {
+                    "name": "MiniMax M2.7",
+                    "family": "minimax",
+                    "provider": {
+                        "npm": "@ai-sdk/anthropic"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 204800,
+                        "output": 131072
+                    },
+                    "cost": {
+                        "input": 0.30,
+                        "output": 1.20,
+                        "cache_read": 0.06,
+                        "cache_write": 0.375
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "tool_call": true,
+                    "release_date": "2026-03-18"
+                },
+                "MiniMax-M2.7-highspeed": {
+                    "name": "MiniMax M2.7 High Speed",
+                    "family": "minimax",
+                    "provider": {
+                        "npm": "@ai-sdk/anthropic"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 204800,
+                        "output": 131072
+                    },
+                    "cost": {
+                        "input": 0.60,
+                        "output": 2.40,
+                        "cache_read": 0.06,
+                        "cache_write": 0.375
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "tool_call": true,
+                    "release_date": "2026-03-18"
+                },
+                "MiniMax-M3": {
+                    "name": "MiniMax M3",
+                    "family": "minimax",
+                    "provider": {
+                        "npm": "@ai-sdk/anthropic"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text",
+                            "image",
+                            "video"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 1000000,
+                        "output": 128000
+                    },
+                    "cost": {
+                        "input": 0.30,
+                        "output": 1.20,
+                        "cache_read": 0.06
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "attachment": true,
+                    "tool_call": true,
+                    "release_date": "2026-06-01",
+                    "variants": {
+                        "none": {
+                            "thinking": {
+                                "type": "disabled"
+                            }
+                        },
+                        "thinking": {
+                            "thinking": {
+                                "type": "adaptive"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "work": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "Work",
+            "options": {
+                "baseURL": "{env:WORK_OPENAI_BASE_URL}",
+                "apiKey": "{env:WORK_OPENAI_API_KEY}"
+            },
+            "models": {
+                "deepseek-v4-flash": {
+                    "name": "DeepSeek V4 Flash",
+                    "family": "deepseek-flash",
+                    "headers": {
+                        "x-bf-disable-content-logging": "true"
+                    },
+                    "provider": {
+                        "npm": "@ai-sdk/openai-compatible"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 1000000,
+                        "output": 384000
+                    },
+                    "cost": {
+                        "input": 0.14,
+                        "output": 0.28,
+                        "cache_read": 0.0028,
+                        "cache_write": 0
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "attachment": false,
+                    "tool_call": true,
+                    "release_date": "2026-04-24",
+                    "interleaved": {
+                        "field": "reasoning_content"
+                    },
+                    "variants": {
+                        "low": {
+                            "reasoningEffort": "low"
+                        },
+                        "medium": {
+                            "reasoningEffort": "medium"
+                        },
+                        "high": {
+                            "reasoningEffort": "high"
+                        },
+                        "max": {
+                            "reasoningEffort": "max"
+                        }
+                    }
+                },
+                "deepseek-v4-pro": {
+                    "name": "DeepSeek V4 Pro",
+                    "family": "deepseek-thinking",
+                    "headers": {
+                        "x-bf-disable-content-logging": "true"
+                    },
+                    "provider": {
+                        "npm": "@ai-sdk/openai-compatible"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 1000000,
+                        "output": 384000
+                    },
+                    "cost": {
+                        "input": 0.435,
+                        "output": 0.87,
+                        "cache_read": 0.003625,
+                        "cache_write": 0
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "attachment": false,
+                    "tool_call": true,
+                    "release_date": "2026-04-24",
+                    "interleaved": {
+                        "field": "reasoning_content"
+                    },
+                    "variants": {
+                        "low": {
+                            "reasoningEffort": "low"
+                        },
+                        "medium": {
+                            "reasoningEffort": "medium"
+                        },
+                        "high": {
+                            "reasoningEffort": "high"
+                        },
+                        "max": {
+                            "reasoningEffort": "max"
+                        }
+                    }
+                }
+            }
+        }
     },
-    "MiniMax": {
-      "enabled": true,
-      "type": "local",
-      "command": [
-        "uvx",
-        "minimax-coding-plan-mcp",
-        "-y"
-      ],
-      "environment": {
-        "MINIMAX_API_KEY": "{env:MINIMAX_TOKEN_PLAN_API_KEY}",
-        "MINIMAX_API_HOST": "https://api.minimax.io"
-      }
+    "mcp": {
+        "semble": {
+            "command": [
+                "uvx",
+                "--from",
+                "semble[mcp]",
+                "semble"
+            ],
+            "type": "local",
+            "enabled": true
+        },
+        "context7": {
+            "type": "remote",
+            "enabled": true,
+            "url": "https://mcp.context7.com/mcp/oauth"
+        },
+        "gh_grep": {
+            "type": "remote",
+            "enabled": true,
+            "url": "https://mcp.grep.app"
+        },
+        "MiniMax": {
+            "enabled": true,
+            "type": "local",
+            "command": [
+                "uvx",
+                "minimax-coding-plan-mcp",
+                "-y"
+            ],
+            "environment": {
+                "MINIMAX_API_KEY": "{env:MINIMAX_TOKEN_PLAN_API_KEY}",
+                "MINIMAX_API_HOST": "https://api.minimax.io"
+            }
+        },
+        "playwright": {
+            "enabled": false,
+            "type": "local",
+            "command": [
+                "npx",
+                "@playwright/mcp@latest"
+            ]
+        },
+        "codegraph": {
+            "enabled": true,
+            "type": "local",
+            "command": [
+                "codegraph",
+                "serve",
+                "--mcp"
+            ]
+        }
     },
-    "playwright": {
-      "enabled": false,
-      "type": "local",
-      "command": [
-        "npx",
-        "@playwright/mcp@latest"
-      ]
-    }
-  },
-  "lsp": {
-    "markdown": {
-      "command": [
-        "marksman",
-        "server"
-      ],
-      "extensions": [
-        ".md",
-        ".mdx"
-      ],
-    }
-  },
-  "compaction": {
-    "auto": true,
-  },
-  "agent": {
-    "explore": {
-      "model": "minimax-coding-plan/MiniMax-M3",
+    "lsp": {
+        "markdown": {
+            "command": [
+                "marksman",
+                "server"
+            ],
+            "extensions": [
+                ".md",
+                ".mdx"
+            ]
+        }
     },
     "compaction": {
-      "model": "minimax-coding-plan/MiniMax-M3",
-    },
-    "plan": {
-      "model": "minimax-coding-plan/MiniMax-M3",
-    },
-    "general": {
-      "model": "minimax-coding-plan/MiniMax-M3",
-    },
-    "build": {
-      "model": "minimax-coding-plan/MiniMax-M3",
-    },
-    "scout": {
-      "model": "minimax-coding-plan/MiniMax-M3",
-    },
-  }
+        "auto": true
+    }
 }
