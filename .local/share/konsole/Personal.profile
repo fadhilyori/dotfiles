@@ -1,5 +1,5 @@
 [Appearance]
-ColorScheme=catppuccin-mocha
+ColorScheme=catppuccin-macchiato
 Font=Fira Code,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 LineSpacing=0
 UseFontLineChararacters=true
