@@ -23,7 +23,7 @@
       ],
       "env": {
         "MINIMAX_API_HOST": "https://api.minimax.io",
-        "MINIMAX_API_KEY": "$MINIMAX_TOKEN_PLAN_API_KEY"
+        "MINIMAX_API_KEY": "$env:MINIMAX_TOKEN_PLAN_API_KEY"
       },
       "directTools": true,
       "lifecycle": "eager"
