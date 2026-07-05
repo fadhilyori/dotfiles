@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.80.3",
-  "theme": "catppuccin-latte/catppuccin-mocha",
+  "theme": "catppuccin-tui-latte/catppuccin-tui-macchiato",
   "defaultProvider": "personal",
   "defaultModel": "MiniMax-M3",
   "terminal": {
@@ -25,7 +25,8 @@
     "npm:pi-prompt-template-model",
     "npm:@vndv/pi-codegraph",
     "npm:@plannotator/pi-extension",
-    "npm:@upstash/context7-pi"
+    "npm:@upstash/context7-pi",
+    "npm:pi-catppuccin-tui"
   ],
   "showHardwareCursor": false,
   "editorPaddingX": 0,

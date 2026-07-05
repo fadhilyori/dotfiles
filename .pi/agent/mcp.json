@@ -14,6 +14,19 @@
       "url": "https://mcp.deepwiki.com/mcp",
       "directTools": true,
       "lifecycle": "eager"
+    },
+    "MiniMax": {
+      "command": "uvx",
+      "args": [
+        "minimax-coding-plan-mcp",
+        "-y"
+      ],
+      "env": {
+        "MINIMAX_API_HOST": "https://api.minimax.io",
+        "MINIMAX_API_KEY": "$MINIMAX_TOKEN_PLAN_API_KEY"
+      },
+      "directTools": true,
+      "lifecycle": "eager"
     }
   }
 }
