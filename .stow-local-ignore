@@ -24,6 +24,7 @@ LICENSE.*
 COPYING
 CLAUDE\.md
 MANUAL.*
+INSTALL.md
 
 # Scripts and executable files
 setup\.sh
