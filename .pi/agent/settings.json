@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.80.3",
-  "theme": "catppuccin-tui-latte/catppuccin-tui-macchiato",
+  "theme": "catppuccin-tui-latte/catppuccin-tui-mocha",
   "defaultProvider": "personal",
   "defaultModel": "MiniMax-M3",
   "terminal": {
@@ -33,7 +33,8 @@
     "npm:@juicesharp/rpiv-i18n",
     "npm:@juicesharp/rpiv-web-tools",
     "npm:@juicesharp/rpiv-args",
-    "npm:@juicesharp/rpiv-workflow"
+    "npm:@juicesharp/rpiv-workflow",
+    "npm:pi-autoresearch"
   ],
   "showHardwareCursor": false,
   "editorPaddingX": 0,
