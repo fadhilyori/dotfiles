@@ -74,7 +74,7 @@
     "ui_font_size": 14.0,
     "buffer_font_family": "JetBrains Mono",
     "buffer_font_size": 14.0,
-    "buffer_font_weight": 400,
+    "buffer_font_weight": 300.0,
     "buffer_line_height": {
         "custom": 1.6
     },
