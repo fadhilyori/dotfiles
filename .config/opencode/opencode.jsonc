@@ -5,14 +5,13 @@
     ],
     "plugin": [
         "opencode-wakatime",
-        "context-mode",
-        "@plannotator/opencode@latest"
+        "context-mode"
     ],
     "autoupdate": true,
     "share": "disabled",
     "default_agent": "plan",
     "model": "personal/MiniMax-M3",
-    "small_model": "personal/MiniMax-M2.7",
+    "small_model": "personal/MiniMax-M3",
     "disabled_providers": [],
     "experimental": {
         "disable_paste_summary": true
@@ -22,15 +21,19 @@
             "npm": "@ai-sdk/anthropic",
             "name": "Personal",
             "options": {
-                "baseURL": "{env:PERSONAL_ANTHROPIC_BASE_URL}",
-                "apiKey": "{env:PERSONAL_ANTHROPIC_API_KEY}"
+                "baseURL": "{env:PERSONAL_BASE_URL}/anthropic/v1",
+                "apiKey": "{env:PERSONAL_API_KEY}"
             },
             "models": {
                 "MiniMax-M2.7": {
                     "name": "MiniMax M2.7",
                     "family": "minimax",
                     "provider": {
-                        "npm": "@ai-sdk/anthropic"
+                        "npm": "@ai-sdk/anthropic",
+                    },
+                    "headers": {
+                        // true: disable content logging, default: content logging is disabled
+                        "x-bf-disable-content-logging": "false"
                     },
                     "modalities": {
                         "input": [
@@ -61,6 +64,9 @@
                     "provider": {
                         "npm": "@ai-sdk/anthropic"
                     },
+                    "headers": {
+                        "x-bf-disable-content-logging": "false"
+                    },
                     "modalities": {
                         "input": [
                             "text"
@@ -89,6 +95,9 @@
                     "family": "minimax",
                     "provider": {
                         "npm": "@ai-sdk/anthropic"
+                    },
+                    "headers": {
+                        "x-bf-disable-content-logging": "false"
                     },
                     "modalities": {
                         "input": [
@@ -129,12 +138,101 @@
                 }
             }
         },
+        "personal-openai": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "Personal",
+            "options": {
+                "baseURL": "{env:PERSONAL_BASE_URL}/v1",
+                "apiKey": "{env:PERSONAL_API_KEY}"
+            },
+            "models": {
+                "glm-5.2": {
+                    "name": "GLM-5.2",
+                    "family": "glm",
+                    "provider": {
+                        "npm": "@ai-sdk/openai-compatible",
+                    },
+                    "headers": {
+                        "x-bf-disable-content-logging": "false"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 1000000,
+                        "output": 131072
+                    },
+                    "cost": {
+                        "input": 0.60,
+                        "output": 2.20,
+                        "cache_read": 0.11
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "attachment": false,
+                    "tool_call": true,
+                    "release_date": "2026-06-13",
+                    "interleaved": {
+                        "field": "reasoning_content"
+                    },
+                    "variants": {
+                        "high": {
+                            "reasoningEffort": "high"
+                        },
+                        "max": {
+                            "reasoningEffort": "max"
+                        }
+                    }
+                },
+                "glm-4.7": {
+                    "name": "GLM-4.7",
+                    "family": "glm",
+                    "provider": {
+                        "npm": "@ai-sdk/openai-compatible",
+                    },
+                    "headers": {
+                        "x-bf-disable-content-logging": "false"
+                    },
+                    "modalities": {
+                        "input": [
+                            "text"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "limit": {
+                        "context": 204800,
+                        "output": 131072
+                    },
+                    "cost": {
+                        "input": 1.40,
+                        "output": 4.40,
+                        "cache_read": 0.26
+                    },
+                    "temperature": true,
+                    "reasoning": true,
+                    "attachment": false,
+                    "tool_call": true,
+                    "release_date": "2025-12-22",
+                    "interleaved": {
+                        "field": "reasoning_content"
+                    },
+                    "variants": {}
+                }
+            }
+        },
         "work": {
             "npm": "@ai-sdk/openai-compatible",
             "name": "Work",
             "options": {
-                "baseURL": "{env:WORK_OPENAI_BASE_URL}",
-                "apiKey": "{env:WORK_OPENAI_API_KEY}"
+                "baseURL": "{env:PERSONAL_BASE_URL}/v1",
+                "apiKey": "{env:PERSONAL_API_KEY}"
             },
             "models": {
                 "deepseek-v4-flash": {
@@ -241,37 +339,12 @@
         }
     },
     "mcp": {
-        "semble": {
-            "command": [
-                "uvx",
-                "--from",
-                "semble[mcp]",
-                "semble"
-            ],
-            "type": "local",
-            "enabled": true
-        },
-        "context7": {
+        "mcp-gateway": {
+            "enabled": true,
             "type": "remote",
-            "enabled": true,
-            "url": "https://mcp.context7.com/mcp/oauth"
-        },
-        "gh_grep": {
-            "type": "remote",
-            "enabled": true,
-            "url": "https://mcp.grep.app"
-        },
-        "MiniMax": {
-            "enabled": true,
-            "type": "local",
-            "command": [
-                "uvx",
-                "minimax-coding-plan-mcp",
-                "-y"
-            ],
-            "environment": {
-                "MINIMAX_API_KEY": "{env:MINIMAX_TOKEN_PLAN_API_KEY}",
-                "MINIMAX_API_HOST": "https://api.minimax.io"
+            "url": "{env:PERSONAL_BASE_URL}/mcp",
+            "headers": {
+                "x-bf-vk": "{env:PERSONAL_API_KEY}"
             }
         },
         "playwright": {
@@ -306,5 +379,25 @@
     },
     "compaction": {
         "auto": true
+    },
+    "agent": {
+        "build": {
+            "model": "personal-openai/glm-5.2"
+        },
+        "plan": {
+            "model": "personal/MiniMax-M3"
+        },
+        "explore": {
+            "model": "personal/MiniMax-M3"
+        },
+        "compaction": {
+            "model": "personal/MiniMax-M3"
+        },
+        "summary": {
+            "model": "personal/MiniMax-M3"
+        },
+        "title": {
+            "model": "personal/MiniMax-M3"
+        }
     }
 }
