@@ -1,15 +1,18 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function (pi: ExtensionAPI) {
-  const baseUrl = process.env.PERSONAL_ANTHROPIC_BASE_URL;
+  const baseUrl = `${process.env.PERSONAL_BASE_URL}/anthropic/v1`;
   if (!baseUrl) {
-    throw new Error("PERSONAL_ANTHROPIC_BASE_URL env var is not set");
+    throw new Error("PERSONAL_BASE_URL env var is not set");
   }
 
   pi.registerProvider("personal", {
     baseUrl,
-    apiKey: "$PERSONAL_ANTHROPIC_API_KEY",
+    apiKey: "$PERSONAL_API_KEY",
     api: "anthropic-messages",
+    headers: {
+      "x-bf-disable-content-logging": "false"
+    },
     models: [
       {
         id: "MiniMax-M3",
@@ -33,33 +36,19 @@ export default function (pi: ExtensionAPI) {
         }
       },
       {
-        id: "MiniMax-M2.7",
-        name: "MiniMax-M2.7",
+        id: "glm-5.2",
+        name: "GLM-5.2",
         reasoning: true,
         input: ["text"],
-        contextWindow: 204800,
-        maxTokens: 131072,
-        cost: {
-          input: 0.3,
-          output: 1.2,
-          cacheRead: 0.06,
-          cacheWrite: 0.375
-        }
-      },
-      {
-        id: "MiniMax-M2.7-highspeed",
-        name: "MiniMax-M2.7 High Speed",
-        reasoning: true,
-        input: ["text"],
-        contextWindow: 204800,
+        contextWindow: 1000000,
         maxTokens: 131072,
         cost: {
           input: 0.6,
-          output: 2.4,
-          cacheRead: 0.06,
-          cacheWrite: 0.375
+          output: 2.2,
+          cacheRead: 0.11,
+          cacheWrite: 0
         }
-      },
+      }
     ]
   });
 }

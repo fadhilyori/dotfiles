@@ -1,14 +1,14 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function (pi: ExtensionAPI) {
-  const baseUrl = process.env.WORK_OPENAI_BASE_URL;
+  const baseUrl = `${process.env.PERSONAL_BASE_URL}/v1`;
   if (!baseUrl) {
-    throw new Error("WORK_OPENAI_BASE_URL env var is not set");
+    throw new Error("PERSONAL_BASE_URL env var is not set");
   }
 
   pi.registerProvider("work", {
     baseUrl,
-    apiKey: "$WORK_OPENAI_API_KEY",
+    apiKey: "$PERSONAL_API_KEY",
     api: "openai-responses",
     headers: {
       "x-bf-disable-content-logging": "true"
