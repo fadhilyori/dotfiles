@@ -13,9 +13,10 @@
         }
     },
     "redact_private_values": true,
+    "snippet_sort_order": "top",
     "diff_view_style": "split",
     "mouse_wheel_zoom": false,
-    "preferred_line_length": 120,
+    "preferred_line_length": 130,
     "vim": {
         "cursor_shape": {
             "visual": "bar",
@@ -71,9 +72,9 @@
         "dark": "Catppuccin Mocha"
     },
     "ui_font_family": "Inter",
-    "ui_font_size": 14.0,
+    "ui_font_size": 16.0,
     "buffer_font_family": "JetBrains Mono",
-    "buffer_font_size": 14.0,
+    "buffer_font_size": 15.0,
     "buffer_font_weight": 300.0,
     "buffer_line_height": {
         "custom": 1.6
@@ -81,13 +82,14 @@
     "soft_wrap": "bounded",
     "telemetry": {
         "diagnostics": false,
-        "metrics": false
+        "metrics": true,
+        "anthropic_retention": false
     },
     "session": {
         "trust_all_worktrees": true
     },
     "buffer_font_features": {
-        "calt": false
+        "calt": true
     },
     "tabs": {
         "file_icons": true,
@@ -97,9 +99,7 @@
         "show": true
     },
     "file_types": {
-        "HAProxy": [
-            "haproxy.cfg"
-        ]
+        "HAProxy": ["haproxy.cfg"]
     },
     "git": {
         "show_stage_restore_buttons": true,
@@ -139,9 +139,7 @@
                 "model": "personal/MiniMax-M3"
             },
             "command": "~/.opencode/bin/opencode",
-            "args": [
-                "acp"
-            ],
+            "args": ["acp"],
             "type": "custom"
         }
     },
@@ -153,7 +151,7 @@
     },
     "edit_predictions": {
         "allow_data_collection": "no",
-        "mode": "subtle",
+        "mode": "eager",
         "provider": "zed"
     },
     "agent": {
@@ -222,22 +220,12 @@
             "formatter": {
                 "external": {
                     "command": "shfmt",
-                    "arguments": [
-                        "--filename",
-                        "{buffer_path}",
-                        "--indent",
-                        "4"
-                    ]
+                    "arguments": ["--filename", "{buffer_path}", "--indent", "4"]
                 }
             }
         },
         "PHP": {
-            "language_servers": [
-                "phpactor",
-                "!intelephense",
-                "!phptools",
-                "..."
-            ]
+            "language_servers": ["phpactor", "!intelephense", "!phptools", "..."]
         },
         "TypeScript": {
             "tab_size": 2
@@ -260,5 +248,27 @@
                 }
             }
         }
+    },
+    "auto_install_extensions": {
+        "ansible": true,
+        "catppuccin": true,
+        "catppuccin-icons": true,
+        "dbml": true,
+        "docker-compose": true,
+        "dockerfile": true,
+        "git-firefly": true,
+        "html": true,
+        "log": true,
+        "lua": true,
+        "make": true,
+        "nginx": true,
+        "php": true,
+        "prisma": true,
+        "proto": true,
+        "python-snippets": true,
+        "sql": true,
+        "tmux": true,
+        "toml": true,
+        "wakatime": true
     }
 }
