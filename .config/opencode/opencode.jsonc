@@ -33,7 +33,7 @@
                     },
                     "headers": {
                         // true: disable content logging, default: content logging is disabled
-                        "x-bf-disable-content-logging": "false"
+                        "x-bf-disable-content-logging": "true"
                     },
                     "modalities": {
                         "input": [
@@ -65,7 +65,7 @@
                         "npm": "@ai-sdk/anthropic"
                     },
                     "headers": {
-                        "x-bf-disable-content-logging": "false"
+                        "x-bf-disable-content-logging": "true"
                     },
                     "modalities": {
                         "input": [
@@ -97,7 +97,7 @@
                         "npm": "@ai-sdk/anthropic"
                     },
                     "headers": {
-                        "x-bf-disable-content-logging": "false"
+                        "x-bf-disable-content-logging": "true"
                     },
                     "modalities": {
                         "input": [
@@ -153,7 +153,7 @@
                         "npm": "@ai-sdk/openai-compatible",
                     },
                     "headers": {
-                        "x-bf-disable-content-logging": "false"
+                        "x-bf-disable-content-logging": "true"
                     },
                     "modalities": {
                         "input": [
@@ -196,7 +196,7 @@
                         "npm": "@ai-sdk/openai-compatible",
                     },
                     "headers": {
-                        "x-bf-disable-content-logging": "false"
+                        "x-bf-disable-content-logging": "true"
                     },
                     "modalities": {
                         "input": [
@@ -344,7 +344,7 @@
             "type": "remote",
             "url": "{env:PERSONAL_BASE_URL}/mcp",
             "headers": {
-                "x-bf-vk": "{env:PERSONAL_API_KEY}"
+                "x-plan-vk": "{env:PERSONAL_API_KEY}"
             }
         },
         "playwright": {
@@ -382,7 +382,7 @@
     },
     "agent": {
         "build": {
-            "model": "personal-openai/glm-5.2"
+            "model": "personal/MiniMax-M3"
         },
         "plan": {
             "model": "personal/MiniMax-M3"
