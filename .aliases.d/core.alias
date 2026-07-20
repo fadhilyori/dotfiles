@@ -51,6 +51,27 @@ alias mv='mv -i'
 #    fi
 #}
 
+# Open OpenCode and Pi in tmux session
+opencode() {
+    if [ -n "$TMUX" ]; then
+        command opencode "$@"
+    else
+        local session="oc-$(basename "$PWD" | tr -c 'a-zA-Z0-9' '-')"
+        tmux new-session -A -s "$session" \
+            bash -c "source ~/.config/secrets.env && command opencode $*"
+    fi
+}
+
+pi() {
+    if [ -n "$TMUX" ]; then
+        command pi "$@"
+    else
+        local session="pi-$(basename "$PWD" | tr -c 'a-zA-Z0-9' '-')"
+        tmux new-session -A -s "$session" \
+            bash -c "source ~/.config/secrets.env && command pi $*"
+    fi
+}
+
 # Alias for Zed Extension
 alias nginx-language-server='uvx nginx-language-server'
 
@@ -66,13 +87,13 @@ fi
 
 # Enhanced ls replacement (if eza is available)
 if command -v eza >/dev/null 2>&1; then
-	# Replace ls with eza - enhanced listing with icons, directories first, and header
-	alias ls='eza --icons=auto --group --octal-permissions -l --group-directories-first --header'
-	alias ll='eza --icons=auto --group --octal-permissions -al --group-directories-first --header'
+    # Replace ls with eza - enhanced listing with icons, directories first, and header
+    alias ls='eza --icons=auto --group --octal-permissions -l --group-directories-first --header'
+    alias ll='eza --icons=auto --group --octal-permissions -al --group-directories-first --header'
 else
-	# Fallback for users without eza
-	alias ls='ls --color=auto'
-	alias ll='ls -al'
+    # Fallback for users without eza
+    alias ls='ls --color=auto'
+    alias ll='ls -al'
 fi
 
 # Enhanced cat replacement (if bat/batcat is available)
@@ -111,44 +132,47 @@ fi
 if command -v zoxide >/dev/null 2>&1; then
     alias cd='z'
 else
-    alias cd='builtin cd'  # fallback to builtin if zoxide unavailable
+    alias cd='builtin cd' # fallback to builtin if zoxide unavailable
 fi
-alias cdi='zi'  # interactive directory selection with fzf
+alias cdi='zi' # interactive directory selection with fzf
 alias ..='cd ..'
 alias ...='cd ../..'
 
 # Package Management (Ubuntu/Debian)
-alias apti='sudo apt install -y'           # apt install
-alias aptu='sudo apt update && sudo apt upgrade -y'  # apt upgrade
-alias aptdu='sudo apt update && sudo apt dist-upgrade -y'  # apt dist-upgrade
-alias apts='apt search'                    # apt search
-alias aptr='sudo apt remove -y'            # apt remove
-alias aptc='sudo apt autoremove -y && sudo apt autoclean'  # apt clean
-alias aptsh='apt show'                     # apt show
+alias apti='sudo apt install -y'                          # apt install
+alias aptu='sudo apt update && sudo apt upgrade -y'       # apt upgrade
+alias aptdu='sudo apt update && sudo apt dist-upgrade -y' # apt dist-upgrade
+alias apts='apt search'                                   # apt search
+alias aptr='sudo apt remove -y'                           # apt remove
+alias aptc='sudo apt autoremove -y && sudo apt autoclean' # apt clean
+alias aptsh='apt show'                                    # apt show
 
 # Docker management aliases
-dstop() { local containers=$(docker ps -q); if [ -n "$containers" ]; then docker stop "$containers"; else echo "No running containers"; fi; }
-alias dps='docker ps -a'                   # docker ps all containers
-alias dimg='docker images'                 # docker images
-alias drun='docker run -it --rm'           # docker run interactive, remove on exit
-alias drma='docker container prune -f'     # remove all stopped containers
-alias drmi='docker image prune -f'         # remove dangling images
-alias dvol='docker volume ls'              # list volumes
-alias dnet='docker network ls'             # list networks
-alias dexec='docker exec -it'              # docker exec interactive
-alias dlog='docker logs -f'                # follow container logs
+dstop() {
+    local containers=$(docker ps -q)
+    if [ -n "$containers" ]; then docker stop "$containers"; else echo "No running containers"; fi
+}
+alias dps='docker ps -a'               # docker ps all containers
+alias dimg='docker images'             # docker images
+alias drun='docker run -it --rm'       # docker run interactive, remove on exit
+alias drma='docker container prune -f' # remove all stopped containers
+alias drmi='docker image prune -f'     # remove dangling images
+alias dvol='docker volume ls'          # list volumes
+alias dnet='docker network ls'         # list networks
+alias dexec='docker exec -it'          # docker exec interactive
+alias dlog='docker logs -f'            # follow container logs
 
 # Docker Compose aliases
-alias doco='docker compose'                  # docker compose
-alias dcup='docker compose up -d'          # docker compose up detached
-alias dcdown='docker compose down'         # docker compose down
-alias dcps='docker compose ps'             # docker compose ps
-alias dclog='docker compose logs -f'       # docker compose follow logs
+alias doco='docker compose'          # docker compose
+alias dcup='docker compose up -d'    # docker compose up detached
+alias dcdown='docker compose down'   # docker compose down
+alias dcps='docker compose ps'       # docker compose ps
+alias dclog='docker compose logs -f' # docker compose follow logs
 
 # Python3 development aliases
-alias py='python3'                         # python3
-alias pip='pip3'                           # pip3
-alias venv='python3 -m venv'               # create virtual environment
+alias py='python3'           # python3
+alias pip='pip3'             # pip3
+alias venv='python3 -m venv' # create virtual environment
 
 # Activate virtual environment (searches common locations)
 vact() {
@@ -198,61 +222,61 @@ alias vdeact='[[ -n "$VIRTUAL_ENV" ]] && deactivate || echo "No active virtual e
 # Show current venv status
 alias vwhich='echo "${VIRTUAL_ENV:-No active virtual environment}"'
 
-alias pipup='pip install --upgrade pip'    # upgrade pip
-alias pipr='pip install -r requirements.txt'  # install from requirements
-alias pipf='pip freeze > requirements.txt' # freeze requirements
+alias pipup='pip install --upgrade pip'      # upgrade pip
+alias pipr='pip install -r requirements.txt' # install from requirements
+alias pipf='pip freeze > requirements.txt'   # freeze requirements
 
 # Node.js/NPM aliases
-alias ni='npm install'                     # npm install
-alias nr='npm run'                         # npm run
-alias ns='npm start'                       # npm start
-alias nt='npm test'                        # npm test
-alias nls='npm list -g --depth=0'          # list global packages
-alias nout='npm outdated -g'               # outdated global packages
-alias nbuild='npm run build'               # npm run build
-alias ndev='npm run dev'                   # npm run dev
+alias ni='npm install'            # npm install
+alias nr='npm run'                # npm run
+alias ns='npm start'              # npm start
+alias nt='npm test'               # npm test
+alias nls='npm list -g --depth=0' # list global packages
+alias nout='npm outdated -g'      # outdated global packages
+alias nbuild='npm run build'      # npm run build
+alias ndev='npm run dev'          # npm run dev
 
 # Golang development aliases
-alias gob='go build'                       # go build
-alias gor='go run'                         # go run
-alias got='go test'                        # go test
-alias gofmt='gofmt -w'                     # format go files
-alias govet='go vet'                       # go vet
+alias gob='go build'   # go build
+alias gor='go run'     # go run
+alias got='go test'    # go test
+alias gofmt='gofmt -w' # format go files
+alias govet='go vet'   # go vet
 
 # PHP/Laravel development aliases
-alias art='php artisan'                    # artisan
-alias laserve='php artisan serve'          # Laravel serve
-alias lamigrate='php artisan migrate'      # Laravel migrate
-alias lafresh='php artisan migrate:fresh'  # Laravel fresh migrate
-alias laseed='php artisan db:seed'         # Laravel seed
-alias latinker='php artisan tinker'        # Laravel tinker
-alias lacache='php artisan cache:clear'    # Laravel cache clear
-alias laconfig='php artisan config:clear'  # Laravel config clear
+alias art='php artisan'                   # artisan
+alias laserve='php artisan serve'         # Laravel serve
+alias lamigrate='php artisan migrate'     # Laravel migrate
+alias lafresh='php artisan migrate:fresh' # Laravel fresh migrate
+alias laseed='php artisan db:seed'        # Laravel seed
+alias latinker='php artisan tinker'       # Laravel tinker
+alias lacache='php artisan cache:clear'   # Laravel cache clear
+alias laconfig='php artisan config:clear' # Laravel config clear
 
 # System administration aliases
 # File system operations
 # Enhanced df replacement (if duf is available)
 if command -v duf >/dev/null 2>&1; then
-    alias _df='/usr/bin/df'                # original df command
-    alias df='duf'                         # use duf as df
-    alias dfh='duf'                        # disk usage human readable
-    alias dfl='duf -only local'            # local filesystems only
+    alias _df='/usr/bin/df'     # original df command
+    alias df='duf'              # use duf as df
+    alias dfh='duf'             # disk usage human readable
+    alias dfl='duf -only local' # local filesystems only
 else
-    alias dfh='df -h'                      # fallback to df -h
+    alias dfh='df -h' # fallback to df -h
 fi
 
 # Enhanced du replacement (if ncdu is available)
 if command -v ncdu >/dev/null 2>&1; then
-    alias _du='/usr/bin/du'                # original du command
-    alias du='ncdu'                        # use ncdu as du
+    alias _du='/usr/bin/du' # original du command
+    alias du='ncdu'         # use ncdu as du
 fi
 
-alias dush='/usr/bin/du -sh "$@" | sort -h'  # directory sizes (uses original du)
-alias lsbig='ls -lahS | head -10'          # largest files in directory
+alias dush='/usr/bin/du -sh "$@" | sort -h' # directory sizes (uses original du)
+alias lsbig='ls -lahS | head -10'           # largest files in directory
 
 # Network diagnostics
-alias myip='curl -s ipinfo.io/ip'           # external IP
-alias myipinfo='curl -s ipinfo.io'          # detailed IP info
+alias myip='curl -s ipinfo.io/ip'  # external IP
+alias myipinfo='curl -s ipinfo.io' # detailed IP info
 # listening ports
 ports() {
     if command -v ss >/dev/null 2>&1; then
@@ -265,9 +289,9 @@ ports() {
 }
 
 # Process management
-alias psa='ps aux'                         # all processes
-alias psg='ps aux | grep -i "$@"'          # grep processes (takes argument)
-alias memh='free -h'                       # memory usage human readable
+alias psa='ps aux'                # all processes
+alias psg='ps aux | grep -i "$@"' # grep processes (takes argument)
+alias memh='free -h'              # memory usage human readable
 
 alias dotfiles='cd ~/.dotfiles'
 alias dotfiles-update='cd ~/.dotfiles && git pull origin $(git rev-parse --abbrev-ref HEAD) && cd -'
@@ -277,10 +301,10 @@ alias oc='opencode attach http://localhost:4096 --dir .'
 
 # Tmux aliases
 if command -v tmux >/dev/null 2>&1; then
-    alias tl='tmux ls'                                          # list sessions
-    alias tk='tmux kill-session -t'                             # kill session: tk <name>
+    alias tl='tmux ls'              # list sessions
+    alias tk='tmux kill-session -t' # kill session: tk <name>
 
-    tn() {                                                      # new session: tn [name]
+    tn() { # new session: tn [name]
         if [ -n "$1" ]; then
             tmux new-session -s "$1"
         else
@@ -288,7 +312,7 @@ if command -v tmux >/dev/null 2>&1; then
         fi
     }
 
-    ta() {                                                      # attach: ta [name]
+    ta() { # attach: ta [name]
         if [ -n "$1" ]; then
             tmux attach -t "$1"
         elif tmux list-sessions >/dev/null 2>&1; then
@@ -300,7 +324,7 @@ if command -v tmux >/dev/null 2>&1; then
                 tmux attach -t "$sessions"
             elif command -v fzf >/dev/null 2>&1; then
                 local session
-                session=$(printf '%s\n' "$sessions" | \
+                session=$(printf '%s\n' "$sessions" |
                     fzf --prompt='tmux session> ' \
                         --preview='tmux capture-pane -p -t {}' \
                         --preview-window=right:60%) || return
